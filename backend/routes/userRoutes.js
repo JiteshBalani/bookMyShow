@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 router.post('/register', async(req, res) => {
     try{
@@ -21,9 +22,12 @@ router.post('/register', async(req, res) => {
         const newUser = await User(req.body);
         await newUser.save();
 
+        const token = jwt.sign({userId: newUser._id}, "BMS-signUp", {expiresIn: "1d"})
+
         res.send({
             success: true,
-            message: 'Registration successful!'
+            message: 'Registration successful!',
+            token: token
         });
 
     }catch(err){
@@ -58,9 +62,12 @@ router.post('/login', async(req, res) => {
             return;
         }
 
+        const token = jwt.sign({userId: user._id}, "BMS-login", {expiresIn: "1d"})
+
         res.send({
             status: true,
-            message: "Logged in successfully!"
+            message: "Logged in successfully!",
+            token: token
         })
 
     }catch(err){

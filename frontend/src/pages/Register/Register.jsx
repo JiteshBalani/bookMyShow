@@ -1,20 +1,38 @@
-import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import React from 'react'
+import { Button, Form, Input } from 'antd'
+import { RegisterUser } from '../../api/users'
 
-
-function Login() {
- return (
- <header className="App-header">
+const Register = () => {
+    const onFinish = async(values) => {
+        const response = await RegisterUser(values);
+        localStorage.setItem('token', response.token);
+        console.log(response);
+      }
+  return (
+    <header className="App-header">
    <main className="main-area mw-500 text-center px-3">
      <section className="left-section">
        <h1>
-         Login to BookMyShow
+         Register to BookMyShow
        </h1>
      </section>
      <section className="right-section">
        <Form
          layout='vertical'
+         onFinish={onFinish}
        >
+       <Form.Item
+           label="Name"
+           htmlFor="name"
+           name="name"
+           className="d-block" rules={[{ required: true, message: "Name is required" }]}
+         >
+           <Input
+             id="name"
+             type="text"
+             placeholder="Enter your Name"
+           ></Input>
+         </Form.Item>
          <Form.Item
            label="Email"
            htmlFor="email"
@@ -49,17 +67,14 @@ function Login() {
              htmlType="submit"
              style={{ fontSize: "1rem", fontWeight: "600" }}
            >
-             Login
+             Register
            </Button>
          </Form.Item>
        </Form>
      </section>
    </main>
    </header>
- )
+  )
 }
 
-
-
-
-export default Login;
+export default Register
