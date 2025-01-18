@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 router.post('/register', async(req, res) => {
     try{
@@ -22,7 +23,7 @@ router.post('/register', async(req, res) => {
         const newUser = await User(req.body);
         await newUser.save();
 
-        const token = jwt.sign({userId: newUser._id}, "BMS-signUp", {expiresIn: "1d"})
+        const token = jwt.sign({userId: newUser._id}, "BMS-login", {expiresIn: "1d"})
 
         res.send({
             success: true,
@@ -74,5 +75,15 @@ router.post('/login', async(req, res) => {
         console.log(err);
     };
 });
+
+router.get('/get-current-user', authMiddleware, async(req, res) => {
+    //inform the server if token is valid or not and who the user is
+    const user = await User.findById(req.body.userId);
+    res.send({
+        success: true,
+        message: 'You are authorized.',
+        data: user
+    })
+})
 
 module.exports = router;
