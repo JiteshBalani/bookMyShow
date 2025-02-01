@@ -1,5 +1,5 @@
   import { useEffect } from 'react';
-  import { Button, Form, Input } from 'antd';
+  import { Button, Form, Input, message } from 'antd';
   import { LoginUser } from '../../api/users';
   import { useNavigate } from 'react-router-dom';
   
@@ -12,8 +12,10 @@
           localStorage.setItem('token', response.token);
           navigate('/');
           console.log(response);
+          message.success("User logged in.");
         } else{
           console.log(response.message);
+          message.error(response.message);
         }
       } catch(error) {
         console.log(error);
