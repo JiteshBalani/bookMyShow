@@ -12,7 +12,7 @@
           localStorage.setItem('token', response.token);
           navigate('/');
           console.log(response);
-          message.success("User logged in.");
+          message.success("You are logged in.");
         } else{
           console.log(response.message);
           message.error(response.message);

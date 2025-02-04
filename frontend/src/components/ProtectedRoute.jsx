@@ -1,16 +1,53 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GetCurrentUser } from '../api/users';
-import { message } from 'antd';
+import { Menu, Layout, message } from 'antd';
+// import { Menu, message, Layout, Header } from 'antd';
+import { Header } from 'antd/es/layout/layout';
+import {
+  HomeOutlined,
+  LogoutOutlined,
+  ProfileOutlined,
+  UserOutlined
+} from '@ant-design/icons';
 
 // eslint-disable-next-line react/prop-types
 const ProtectedRoute = ({children}) => {
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
 
-  const getValidUser =async() =>{
+  const navItems = [
+    {
+      key: "home",
+      label: <span onClick={() => navigate('/')}>Home</span>,
+      icon: <HomeOutlined />
+    },
+    {
+      key: "user",
+      label: `${user? user.name : ""}`,
+      icon: <UserOutlined />,
+      children:[
+        {
+          key: "profile",
+          label: <span onClick={() => user?.isAdmin ? navigate('/admin') : navigate('/profile')}>Profile</span>,
+          icon: <ProfileOutlined />
+        },
+        {
+          key: "logout",
+          label: (
+            <Link to='/login' onClick={() => {
+              localStorage.removeItem('token');
+            }}>Logout</Link>
+          ),
+          icon: <LogoutOutlined />
+        }
+      ]
+    },
+  ]
+
+  const getValidUser = async() =>{
     try{
       const response = await GetCurrentUser();
       console.log(response);
@@ -27,13 +64,30 @@ const ProtectedRoute = ({children}) => {
     } else {
       navigate('/login');
     }
-  }, []);
+  }, [navigate]);
 
   return (
-    <div>
-    <div>{user.name}</div>
-    {children}
-    </div>
+    <>
+    <Layout>
+      <Header
+        className='d-flex justify-content-between cursor-pointer'
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 1,
+          width: "100%",
+          display: "flex",
+          alignItems: "center"
+        }}
+      >
+        <h3 className='demo-logo text-white m-0' style={{color: "white"}} onClick={() => navigate('/')}>Book My Show</h3>
+        <Menu theme='dark' mode='horizontal' items={navItems}/>
+      </Header>
+      <div style={{padding: 24, minHeight: 380, background: "#fff"}}>
+        {children}
+      </div>
+    </Layout>
+    </>
   )
 }
 
