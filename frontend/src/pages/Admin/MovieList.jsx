@@ -1,12 +1,14 @@
 import {useState, useEffect} from 'react'
 import { getAllMovies } from '../../api/movies';
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
+import MovieForm from './MovieForm';
 
 const MovieList = () => {
 
     const[movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
 
     const getData = async () => {
         try{
@@ -66,11 +68,24 @@ const MovieList = () => {
     ]
 
   return (
+  <>
+    <div className='d-flex justify-content-end'>
+      <Button onClick={() => {
+        setModalOpen(true);
+      }}>
+        Add Movie
+      </Button>
+    </div>
+
+    {/* modal */}
+    {modalOpen && <MovieForm modalOpen={modalOpen} setModalOpen={setModalOpen}/>}
+
     <Table columns={tableHeadings} 
     loading={loading} 
     dataSource={movies}
     rowKey="_id"
     />
+  </>
   )
 }
 

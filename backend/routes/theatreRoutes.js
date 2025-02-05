@@ -20,7 +20,7 @@ router.post('/add-theatre', async(req, res) => {
 });
 
 //get all theatres
-router.get('/get-all-theatres', async(res) => {
+router.get('/get-all-theatres', async(req, res) => {
     try{
         const allTheatres = await Theatre.find().populate('owner');
         res.send({

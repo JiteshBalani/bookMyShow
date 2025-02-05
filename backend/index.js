@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const movieRoutes = require('./routes/movieRoutes');
+const theatreRoutes = require('./routes/theatreRoutes');
+const showRoutes = require('./routes/showRoutes');
 
 const app = express();
 app.use(express.json());
@@ -14,6 +16,8 @@ app.use(cors({
 }));
 app.use('/api/users', userRoutes);
 app.use('/api/movies', movieRoutes);
+app.use('/api/theatres', theatreRoutes);
+app.use('/api/shows', showRoutes);
 
 const dbURL = "mongodb+srv://Jitesh:ilfcbFmBXsLrzDkD@cluster0.ezae6pw.mongodb.net/BookMyShow?retryWrites=true&w=majority&appName=Cluster0";
 
