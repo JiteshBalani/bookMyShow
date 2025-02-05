@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { GetCurrentUser } from '../api/users';
 import { Menu, Layout, message } from 'antd';
 // import { Menu, message, Layout, Header } from 'antd';
@@ -12,11 +12,17 @@ import {
 } from '@ant-design/icons';
 
 // eslint-disable-next-line react/prop-types
-const ProtectedRoute = ({children}) => {
+const ProtectedRoute = ({children, adminOnly = false}) => {
 
   const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUser(null);
+    navigate('/login');
+  }
 
   const navItems = [
     {
@@ -31,27 +37,35 @@ const ProtectedRoute = ({children}) => {
       children:[
         {
           key: "profile",
-          label: <span onClick={() => user?.isAdmin ? navigate('/admin') : navigate('/profile')}>Profile</span>,
+          label: <span onClick={() => 
+          user?.isAdmin ? navigate('/admin') : navigate('/profile')}>Profile</span>,
           icon: <ProfileOutlined />
         },
         {
           key: "logout",
-          label: (
-            <Link to='/login' onClick={() => {
-              localStorage.removeItem('token');
-            }}>Logout</Link>
-          ),
+          label: <span onClick={handleLogout}>Logout</span>,
           icon: <LogoutOutlined />
         }
       ]
     },
   ]
 
+
   const getValidUser = async() =>{
     try{
       const response = await GetCurrentUser();
       console.log(response);
-      setUser(response.data);
+      if(user !== response.data){
+        setUser(response.data);
+      }
+      // setUser(response.data);
+      // console.log(response.data.name);
+
+      if(adminOnly && !response.data.isAdmin){
+        message.error("You are not authorized to access this page");
+        navigate('/');
+        return;
+      }
     } catch(error){
       console.log(error);
       message.error(error.message);
@@ -64,7 +78,7 @@ const ProtectedRoute = ({children}) => {
     } else {
       navigate('/login');
     }
-  }, [navigate]);
+  }, [setUser]);
 
   return (
     <>
@@ -81,7 +95,7 @@ const ProtectedRoute = ({children}) => {
         }}
       >
         <h3 className='demo-logo text-white m-0' style={{color: "white"}} onClick={() => navigate('/')}>Book My Show</h3>
-        <Menu theme='dark' mode='horizontal' items={navItems}/>
+        <Menu theme='dark' mode='horizontal' items={navItems} selectedKeys={[]}/>
       </Header>
       <div style={{padding: 24, minHeight: 380, background: "#fff"}}>
         {children}
