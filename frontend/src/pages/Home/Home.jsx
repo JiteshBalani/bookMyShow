@@ -1,8 +1,9 @@
 import React from 'react'
+import { Spin } from 'antd';
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div><Spin/></div>
   )
 }
 

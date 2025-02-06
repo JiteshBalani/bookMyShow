@@ -10,7 +10,7 @@
         const response = await LoginUser(values);
         if(response.status) {
           localStorage.setItem('token', response.token);
-          navigate('/');
+          navigate('/', {replace: true});
           console.log(response);
           message.success("You are logged in.");
         } else{
@@ -23,7 +23,7 @@
     }
     useEffect(() => {
       if (localStorage.getItem('token')) {
-        navigate("/");
+        navigate("/", {replace: true});
       }
     }, []);
     

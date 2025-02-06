@@ -10,5 +10,11 @@ export const axiosInstance = axios.create({
     // timeout: 1000,
   });
 
-
+  axiosInstance.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
 // // Add a request interceptor to dynamically add the token

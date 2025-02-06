@@ -1,13 +1,44 @@
-import React from 'react'
-import { Button, Form, Input } from 'antd'
+import { useState } from 'react';
+import { Button, Form, Input, message } from 'antd'
 import { RegisterUser } from '../../api/users'
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const onFinish = async(values) => {
-        const response = await RegisterUser(values);
-        localStorage.setItem('token', response.token);
-        console.log(response);
-      }
+
+  const navigate = useNavigate();
+
+  const [loadings, setLoadings] = useState([]);
+
+  const enterLoading = (index) => {
+    setLoadings((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+    setTimeout(() => {
+      setLoadings((prevLoadings) => {
+        const newLoadings = [...prevLoadings];
+        newLoadings[index] = false;
+        return newLoadings;
+      });
+    }, 3000);
+  };
+
+  const onFinish = async(values) => {
+    try{
+      const response = await RegisterUser(values);
+      localStorage.setItem('token', response.token);
+      console.log(response);
+      
+      message.success('Registration successful! Logging you in...');
+      setTimeout(() => {
+        navigate('/', {replace: true});
+      },1200)
+    } catch(error) {
+      message.error(error.response?.data?.message || 'Registration Failed!');
+      console.error('Registration Error', error);
+    }  
+  }
   return (
     <header className="App-header">
    <main className="main-area mw-500 text-center px-3">
@@ -37,7 +68,8 @@ const Register = () => {
            label="Email"
            htmlFor="email"
            name="email"
-           className="d-block" rules={[{ required: true, message: "Email is required" }]}
+           className="d-block" rules={[{ required: true, message: "Email is required" },
+           {type: 'email', message: 'Please enter a valid email.'}]}
          >
            <Input
              id="email"
@@ -52,18 +84,18 @@ const Register = () => {
            className="d-block"
            rules={[{ required: true, message: "Password is required" }]}
          >
-           <Input
+           <Input.Password
              id="password"
-             type="password"
              placeholder="Enter your Password"
 
 
-           ></Input>
+           ></Input.Password>
          </Form.Item>
          <Form.Item className="d-block">
            <Button
              type="primary"
              block
+             loading={loadings[0]} onClick={() => enterLoading(0)}
              htmlType="submit"
              style={{ fontSize: "1rem", fontWeight: "600" }}
            >

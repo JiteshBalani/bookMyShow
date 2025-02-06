@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { replace, useNavigate } from 'react-router-dom';
 import { GetCurrentUser } from '../api/users';
 import { Menu, Layout, message } from 'antd';
 // import { Menu, message, Layout, Header } from 'antd';
@@ -21,7 +21,7 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUser(null);
-    navigate('/login');
+    navigate('/login', {replace: true});
   }
 
   const navItems = [
