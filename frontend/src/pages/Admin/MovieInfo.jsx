@@ -1,32 +1,63 @@
 import { Col, Modal, Row, Form, Input, Select, Button, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { addMovie } from "../../api/movies";
+import { updateMovie } from "../../api/movies";
+import { deleteMovie } from "../../api/movies";
 
-const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
+const MovieInfo = ({movieInfoOpen, setMovieInfoOpen, selectedMovie, onMovieUpdate}) => {
 
-    const handleCancel = () => {
-        setModalOpen(false);
-    };
+  const handleOk = () => {
+    setMovieInfoOpen(false);
+  };
+  const handleCancel = () => {
+    setMovieInfoOpen(false);
+  };
 
-    const handleChange = (value) => {
-        console.log(`selected ${value}`);
-    };
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+};
 
-    const onFinish = async(values) => {
-        console.log(values);
-        const response = await addMovie(values);
+const handleDelete = () => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this movie?",
+      content: "This action cannot be undone.",
+      okText: "Yes, Delete",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk: async () => {
+        const response = await deleteMovie(selectedMovie._id);
+        setMovieInfoOpen(false);
+        message.success("Movie deleted successfully!");
         onMovieUpdate();
-        setModalOpen(false);
-        message.success('New movie added!');
         console.log(response);
-    };
+      },
+    });
+  };  
+
+  const onFinish = async(values) => {
+    console.log(values);
+    const response = await updateMovie(selectedMovie._id, values);
+    setMovieInfoOpen(false);
+    message.success('Changes saved successfully!');
+    onMovieUpdate();
+    console.log(response);
+  }
 
   return (
-    <Modal open={modalOpen} width={800} footer={null} onCancel={handleCancel}>
+    <>
+      <Modal id={selectedMovie?._id} title={selectedMovie?.title || 'Movie Details'} open={movieInfoOpen} width={800} footer={null} onCancel={handleCancel}>
         <Form
         layout="vertical"
         style={{ width: "100%" }}
         onFinish={onFinish}
+        initialValues={{
+            title: selectedMovie?.title,
+            description: selectedMovie?.description,
+            duration: selectedMovie?.duration,
+            language: selectedMovie?.language,
+            releaseDate: selectedMovie?.releaseDate,
+            genre: selectedMovie?.genre,
+            poster: selectedMovie?.poster
+        }}
       >
         <Row
           gutter={{
@@ -42,7 +73,7 @@ const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
               htmlFor="title"
               name="title"
               className="d-block"
-              rules={[{ required: true, message: "Movie name is required!" }]}
+              rules={[{ required: false, message: "Movie name is required!" }]}
             >
               <Input
                 id="title"
@@ -57,7 +88,7 @@ const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
               htmlFor="description"
               name="description"
               className="d-block"
-              rules={[{ required: true, message: "Description is required!" }]}
+              rules={[{ required: false, message: "Description is required!" }]}
             >
               <TextArea
                 id="description"
@@ -82,7 +113,7 @@ const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
                   name="duration"
                   className="d-block"
                   rules={[
-                    { required: true, message: "Movie duration  is required!" },
+                    { required: false, message: "Movie duration  is required!" },
                   ]}
                 >
                   <Input
@@ -99,12 +130,11 @@ const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
                   name="language"
                   className="d-block"
                   rules={[
-                    { required: true, message: "Movie language  is required!" },
+                    { required: false, message: "Movie language  is required!" },
                   ]}
                 >
                   <Select
                     id="language"
-                    defaultValue="Select Language"
                     style={{ width: "100%", height: "45px" }}
                     onChange={handleChange}
                     options={[
@@ -126,7 +156,7 @@ const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
                   className="d-block"
                   rules={[
                     {
-                      required: true,
+                      required: false,
                       message: "Movie Release Date is required!",
                     },
                   ]}
@@ -156,11 +186,10 @@ const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
                   name="genre"
                   className="d-block"
                   rules={[
-                    { required: true, message: "Movie genre  is required!" },
+                    { required: false, message: "Movie genre  is required!" },
                   ]}
                 >
                   <Select
-                    defaultValue="Select Movie"
                     style={{ width: "100%" }}
                     onChange={handleChange}
                     options={[
@@ -183,7 +212,7 @@ const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
                   name="poster"
                   className="d-block"
                   rules={[
-                    { required: true, message: "Movie Poster  is required!" },
+                    { required: false, message: "Movie Poster  is required!" },
                   ]}
                 >
                   <Input
@@ -203,15 +232,20 @@ const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
             htmlType="submit"
             style={{ fontSize: "1rem", fontWeight: "600" }}
           >
-            Submit the Data
+            Save
           </Button>
           <Button className="mt-3" block onClick={handleCancel}>
             Cancel
           </Button>
+          <Button danger type="primary" 
+            style={{ fontSize: "1rem", fontWeight: "600" }} 
+            className="mt-3" block onClick={handleDelete}>
+            Delete this movie
+          </Button>
         </Form.Item>
       </Form>
     </Modal>
-  )
-}
-
-export default MovieForm
+    </>
+  );
+};
+export default MovieInfo;
