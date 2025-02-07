@@ -59,11 +59,19 @@ router.get('/get-theatres-for-movie/:movie', async(req, res) => {
         const {movie} = req.params;
         const {date} = req.query;
         const shows = await Show.find({movie, date}).populate('theatre');
-
+        // format the data 
+        let uniqueTheatres = [];
+        shows.forEach(show => {
+            let isTheatre = uniqueTheatres.find(theatre => theatre._id === show.theatre._id);
+            if(!isTheatre){
+                let showsOfThisTheatre = shows.filter(showObj => showObj.theatre._id == show.theatre._id);
+                uniqueTheatres.push({...show.theatre._doc, shows: showsOfThisTheatre});
+            }
+        });
         res.send({
             success: true,
             message: 'Shows by theatre',
-            data: shows
+            data: uniqueTheatres
         })
     } catch(error) {
         res.send({
