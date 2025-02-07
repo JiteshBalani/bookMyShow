@@ -6,6 +6,7 @@ import Login from './pages/Login/Login'
 import Profile from './pages/Profile'
 import Register from './pages/Register/Register'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import SingleMovie from './pages/SingleMovie'
 
 function App() {
   
@@ -16,6 +17,11 @@ function App() {
         <Route path='/' element={
           <ProtectedRoute>
             <Home/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/movie/:id' element={
+          <ProtectedRoute>
+            <SingleMovie/>
           </ProtectedRoute>
         }/>
         <Route path='/admin' element={

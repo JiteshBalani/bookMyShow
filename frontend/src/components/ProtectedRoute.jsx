@@ -91,11 +91,12 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
           zIndex: 1,
           width: "100%",
           display: "flex",
-          alignItems: "center"
+          alignItems: "center",
+          fontFamily: "montserrat"
         }}
       >
-        <h3 className='demo-logo text-white m-0' style={{color: "white"}} onClick={() => navigate('/')}>Book My Show</h3>
-        <Menu theme='dark' mode='horizontal' items={navItems} selectedKeys={[]}/>
+        <h3 className='demo-logo text-white m-0' style={{color: "white", fontSize: "20px", fontWeight: 600}} onClick={() => navigate('/')}>Book My Show</h3>
+        <Menu theme='dark' mode='horizontal' items={navItems} style={{fontSize: "16px"}} selectedKeys={[]}/>
       </Header>
       <div style={{padding: 24, minHeight: 380, background: "#fff"}}>
         {children}

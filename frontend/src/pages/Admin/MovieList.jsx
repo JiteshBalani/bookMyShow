@@ -56,7 +56,7 @@ const MovieList = () => {
         title: 'Poster',
         dataIndex : 'poster',
         render: (text, data) => {
-          return <img src={data.poster} width = "75" height = "115" alt={data.title}/>
+          return <img src={data.poster} width = "75" height = "115" alt={data.title} style={{objectFit: "cover", display: "block"}}/>
         }
       },
       {
