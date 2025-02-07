@@ -36,9 +36,9 @@ router.get('/get-all-theatres', async(req, res) => {
     }
 });
 
-router.delete('/delete-theatre', async(req, res) => {
+router.delete('/delete-theatre/:_id', async(req, res) => {
     try{
-        await Theatre.findByIdAndDelete(req.body.theatreId);
+        await Theatre.findByIdAndDelete(req.params._id);
         res.send({
             success: true,
             message: 'Theatre deleted successfully!',
@@ -52,9 +52,9 @@ router.delete('/delete-theatre', async(req, res) => {
 });
 
 //update theatre info
-router.put('/update-theatre', async(req, res) => {
+router.put('/update-theatre/:_id', async(req, res) => {
     try{
-        await Theatre.findByIdAndUpdate(req.body.theatreId, req.body);
+        await Theatre.findByIdAndUpdate(req.params._id, req.body);
         res.send({
             success: true,
             message: 'Theatre updated successfully!',

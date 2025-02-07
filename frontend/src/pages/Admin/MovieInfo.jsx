@@ -232,7 +232,7 @@ const handleDelete = () => {
             htmlType="submit"
             style={{ fontSize: "1rem", fontWeight: "600" }}
           >
-            Save
+            Save changes
           </Button>
           <Button className="mt-3" block onClick={handleCancel}>
             Cancel

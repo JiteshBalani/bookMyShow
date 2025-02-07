@@ -21,6 +21,7 @@ const MovieList = () => {
           const response = await getAllMovies();
           const allMovies = response?.data || [];
           setMovies(allMovies);
+          setFilteredMovies(allMovies);
         } catch(error){
           setError(error);
           console.log("Failed to fetch the movies", error);
@@ -33,7 +34,7 @@ const MovieList = () => {
       const search =  e.target.value.toLowerCase();
       setSearchQuery(search);
 
-      if(search.trim === '') setFilteredMovies(movies);
+      if(search.trim() === '') setFilteredMovies(movies);
       else {
         const filtered = movies.filter((movie) =>
           movie.title.toLowerCase().includes(search)
