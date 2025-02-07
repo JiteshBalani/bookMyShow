@@ -71,9 +71,9 @@ router.delete('/delete-movie/:_id', async(req, res) => {
 });
 
 //fetch a single movie 
-router.get('/get-movie/:id', async(req, res) => {
+router.get('/movie/:_id', async(req, res) => {
     try{
-        const movie = await Movie.findById(req.params.id);
+        const movie = await Movie.findById(req.params._id);
         res.send({
             success: true,
             message: 'Movie fetched successfully!',

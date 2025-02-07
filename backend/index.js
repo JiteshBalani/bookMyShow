@@ -5,6 +5,7 @@ const userRoutes = require('./routes/userRoutes');
 const movieRoutes = require('./routes/movieRoutes');
 const theatreRoutes = require('./routes/theatreRoutes');
 const showRoutes = require('./routes/showRoutes');
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
@@ -19,7 +20,7 @@ app.use('/api/movies', movieRoutes);
 app.use('/api/theatres', theatreRoutes);
 app.use('/api/shows', showRoutes);
 
-const dbURL = "mongodb+srv://Jitesh:ilfcbFmBXsLrzDkD@cluster0.ezae6pw.mongodb.net/BookMyShow?retryWrites=true&w=majority&appName=Cluster0";
+const dbURL = process.env.DB_URL;
 
 mongoose.connect(dbURL).then( () => {
     try{

@@ -4,6 +4,7 @@ const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authMiddleware = require('../middlewares/authMiddleware');
+require('dotenv').config();
 
 router.post('/register', async(req, res) => {
     try{
@@ -63,7 +64,7 @@ router.post('/login', async(req, res) => {
             return;
         }
 
-        const token = jwt.sign({userId: user._id}, "BMS-login", {expiresIn: "1d"})
+        const token = jwt.sign({userId: user._id}, process.env.SECRET_KEY, {expiresIn: "1d"})
 
         res.send({
             status: true,

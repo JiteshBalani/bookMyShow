@@ -27,7 +27,7 @@ const showSchema = new mongoose.Schema({
         required: true
     },
     bookedSeats: {
-        type: Number,
+        type: [Number],
         default: []
     },
     theatre: {

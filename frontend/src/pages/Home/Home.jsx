@@ -83,13 +83,18 @@ const Home = () => {
                   <h3
                     className="cursor-pointer" style={{fontWeight: 700, fontSize: "16px"}}
                   >
-                    {movie.title}
+                    {movie?.title}
                   </h3>
                   <h3
                     className="cursor-pointer" style={{fontWeight: 400 }}
                   >
-                    {movie.genre}
+                    {movie?.genre}
                   </h3>
+                  <h3 className="cursor-pointer" style={{ fontWeight: 500 }}>
+                  {moment.duration(movie?.duration, "minutes").hours()}h{" "}
+                  {moment.duration(movie?.duration, "minutes").minutes()}m || {movie?.language}
+                  </h3>
+
 
                 </div>
               </Col>
