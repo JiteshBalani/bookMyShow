@@ -19,7 +19,7 @@ router.post('/add-show', async (req, res) => {
 });
 
 //list all shows by theatre
-router.get('/all-shows/:_id', async(req, res) => {
+router.get('/all-shows-by-theatre/:_id', async(req, res) => {
     try {
         const shows = await Show.find({ theatre: req.params._id })
                     .populate([{ path: 'movie' }, { path: 'theatre' }]);
@@ -54,7 +54,7 @@ router.put('/update-show/:_id', async(req, res) => {
 });
 
 //get all theatres by a movie
-router.get('/get-theatres-for-movie/:movie', async(req, res) => {
+router.get('/get-all-theatres-for-movie/:movie', async(req, res) => {
     try{
         const {movie} = req.params;
         const {date} = req.query;

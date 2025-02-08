@@ -73,7 +73,7 @@ const handleDelete = () => {
               htmlFor="title"
               name="title"
               className="d-block"
-              rules={[{ required: false, message: "Movie name is required!" }]}
+              rules={[{ required: true, message: "Movie name is required!" }]}
             >
               <Input
                 id="title"
@@ -88,7 +88,7 @@ const handleDelete = () => {
               htmlFor="description"
               name="description"
               className="d-block"
-              rules={[{ required: false, message: "Description is required!" }]}
+              rules={[{ required: true, message: "Description is required!" }]}
             >
               <TextArea
                 id="description"
@@ -113,7 +113,7 @@ const handleDelete = () => {
                   name="duration"
                   className="d-block"
                   rules={[
-                    { required: false, message: "Movie duration  is required!" },
+                    { required: true, message: "Movie duration  is required!" },
                   ]}
                 >
                   <Input
@@ -130,7 +130,7 @@ const handleDelete = () => {
                   name="language"
                   className="d-block"
                   rules={[
-                    { required: false, message: "Movie language  is required!" },
+                    { required: true, message: "Movie language  is required!" },
                   ]}
                 >
                   <Select
@@ -156,7 +156,7 @@ const handleDelete = () => {
                   className="d-block"
                   rules={[
                     {
-                      required: false,
+                      required: true,
                       message: "Movie Release Date is required!",
                     },
                   ]}
@@ -186,7 +186,7 @@ const handleDelete = () => {
                   name="genre"
                   className="d-block"
                   rules={[
-                    { required: false, message: "Movie genre  is required!" },
+                    { required: true, message: "Movie genre  is required!" },
                   ]}
                 >
                   <Select
@@ -212,7 +212,7 @@ const handleDelete = () => {
                   name="poster"
                   className="d-block"
                   rules={[
-                    { required: false, message: "Movie Poster  is required!" },
+                    { required: true, message: "Movie Poster  is required!" },
                   ]}
                 >
                   <Input

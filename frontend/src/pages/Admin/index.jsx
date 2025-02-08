@@ -1,5 +1,6 @@
 import {Tabs} from 'antd';
 import MovieList from './MovieList';
+import TheatreList from './TheatreList';
 
 const Admin = () => {
     const tabItems = [
@@ -11,7 +12,7 @@ const Admin = () => {
         {
             key: '2',
             label: <span style={{ fontSize: "18px" }}>Theatres</span>,
-            children: <div>Theatres</div>
+            children: <div><TheatreList/></div>
         },
         {
             key: '3',
@@ -22,7 +23,7 @@ const Admin = () => {
     ]
   return (
     <div>
-        <h1 className='font-semibold text-center' style={{fontFamily: 'montserrat'}}>Admin Portal</h1>
+        <h1 className='font-semibold' style={{fontFamily: 'montserrat'}}>Admin Portal</h1>
         <Tabs items={tabItems}/>
     </div>
   )
