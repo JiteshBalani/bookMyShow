@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Show = require('../models/showModel');
+const Theatre = require('../models/theatreModel');
 
 router.post('/add-show', async (req, res) => {
     try {
@@ -15,6 +16,40 @@ router.post('/add-show', async (req, res) => {
             success: false,
             message: `Error adding new show! ${error.message}`
         })
+    }
+});
+
+//add a show by movieID
+router.post('/add-show-by-movie/:_id', async(req, res) => {
+    try {
+        if (!req.params._id) {
+            return res.status(400).send({
+                success: false,
+                message: 'Movie ID is required'
+            });
+        }
+
+        const showData = {
+            ...req.body,
+            movie: req.params._id // Ensure movie ID is properly set
+        };
+
+        // Log the data being saved
+        console.log('Saving show data:', showData);
+
+        const show = new Show(showData);
+        await show.save();
+        
+        res.send({
+            success: true,
+            message: 'New show added!'
+        });
+    } catch(error) {
+        console.error('Error adding show:', error);
+        res.status(500).send({
+            success: false,
+            message: `Error adding new show! ${error.message}`
+        });
     }
 });
 
@@ -58,7 +93,11 @@ router.get('/get-all-theatres-for-movie/:movie', async(req, res) => {
     try{
         const {movie} = req.params;
         const {date} = req.query;
-        const shows = await Show.find({movie, date}).populate('theatre');
+        const startDate = new Date(date);
+        const endDate = new Date(date);
+        endDate.setDate(endDate.getDate() + 1);
+
+        const shows = await Show.find({movie, date: {$gte: startDate, $lt: endDate}}).populate('theatre');
         // format the data 
         let uniqueTheatres = [];
         shows.forEach(show => {

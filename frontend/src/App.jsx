@@ -7,6 +7,7 @@ import Profile from './pages/Profile'
 import Register from './pages/Register/Register'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import SingleMovie from './pages/SingleMovie'
+import AddShow from './pages/Admin/AddShow'
 
 function App() {
   
@@ -27,6 +28,11 @@ function App() {
         <Route path='/admin' element={
           <ProtectedRoute adminOnly={true}>
             <Admin/>
+          </ProtectedRoute>
+        }/>
+        <Route path='/add-show-by-movie/:movieId' element={
+          <ProtectedRoute adminOnly={true}>
+            <AddShow/>
           </ProtectedRoute>
         }/>
         <Route path='/profile' element={

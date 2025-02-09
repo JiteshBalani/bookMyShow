@@ -38,3 +38,12 @@ const showSchema = new mongoose.Schema({
 
 const Shows = mongoose.model('shows', showSchema);
 module.exports = Shows;
+
+// name:
+// date:
+// time:
+// movie:
+// ticketPrice:
+// totalSeats:
+// bookedSeats:
+// theatre:
