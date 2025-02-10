@@ -30,7 +30,7 @@ function App() {
             <Admin/>
           </ProtectedRoute>
         }/>
-        <Route path='/add-show-by-movie/:movieId' element={
+        <Route path='/add-show-by-movie/:movieId/:movieName' element={
           <ProtectedRoute adminOnly={true}>
             <AddShow/>
           </ProtectedRoute>

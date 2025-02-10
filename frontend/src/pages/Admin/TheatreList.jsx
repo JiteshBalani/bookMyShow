@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 import { getAllTheatres } from '../../api/theatres';
-import { Button, Input, Table, Badge } from 'antd';
+import { Button, Input, Table, Badge, Tooltip } from 'antd';
 import TheatreForm from './TheatreForm';
 import TheatreInfo from './TheatreInfo';
 import {SearchOutlined} from '@ant-design/icons';
@@ -70,7 +70,7 @@ const TheatreList = () => {
           title: "Owner",
           dataIndex: "owner",
           render: (data) => {
-            return <span title={data?.email} >{data?.name}</span>
+            return <Tooltip title={data?.email} color='blue'><span >{data?.name}</span></Tooltip>
           }
         },
         {

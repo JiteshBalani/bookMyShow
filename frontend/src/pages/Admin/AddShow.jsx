@@ -2,12 +2,28 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Form, Select, Input, Button, DatePicker, TimePicker, message } from "antd";
 import { addNewShowByMovie } from "../../api/shows";
 import dayjs from "dayjs";
+import { getAllTheatres } from "../../api/theatres";
+import { useEffect, useState } from "react";
 
 const AddShow = () => {
-    const { movieId } = useParams(); // Get movie ID from URL
+    const { movieId, movieName } = useParams(); // Get movie ID and movie name from URL
+    const decodedMovieName = decodeURIComponent(movieName);
     const navigate = useNavigate();
+    const [theatres, setTheatres] = useState([]);
+
+    const theatresList = async() => {
+        const response = await getAllTheatres();
+        setTheatres(response.data);
+        console.log(response.data);
+    }
 
     const onFinish = async (values) => {
+            const selectedTheatre = theatres.find(theatre => theatre._id === values.theatre);
+    
+            if (!selectedTheatre || !selectedTheatre.isActive) {
+                message.error('Theatre not active! Please try again later.');
+                return;
+            } 
         try {
             // Create the formatted values object
             const formattedValues = {
@@ -20,28 +36,37 @@ const AddShow = () => {
                 bookedSeats: [],
                 theatre: values.theatre
             };
+                console.log('Sending values:', formattedValues);
 
+                const response = await addNewShowByMovie(formattedValues.movie, formattedValues);
+
+                if (response.success) {
+                    message.success("New show added successfully!");
+                } else {
+                    message.error(response.message || "Failed to add show. Ensure you are adding the show to active theatres.");
+                }           
             // Add console.log to debug the values being sent
-            console.log('Sending values:', formattedValues);
-
-            const response = await addNewShowByMovie(formattedValues.movie, formattedValues);
-
-            if (response.success) {
-                message.success("New show added successfully!");
-            } else {
-                message.error(response.message || "Failed to add show");
-            }
+            
         } catch (error) {
             console.error("Error details:", error);
             message.error("Error adding show!");
         }
     };
 
+    useEffect(() => {
+        theatresList();
+    },[]);
+
+    useEffect(() => {
+        document.title = `${decodedMovieName} - Add Show`;
+    }, [decodedMovieName]);
+    
+
     console.log('Current movieId:', movieId);
 
     return (
         <div style={{ maxWidth: 600, margin: "auto", padding: 20 }}>
-            <h2>Add New Show</h2>
+            <h2>{decodedMovieName}</h2>
             <Form layout="vertical" onFinish={onFinish}>
 
                 {/* Name  */}
@@ -81,7 +106,7 @@ const AddShow = () => {
                 <Form.Item
                     label="Movie ID" name="movie"
                 >
-                    <Input type='string' disabled value={movieId} placeholder="Enter the movieID from URL" />
+                    <Input type='string' readOnly value={movieId} placeholder="Enter the movieID from URL" />
                 </Form.Item>
                 {/* Ticket Price  */}
                 <Form.Item
@@ -89,7 +114,9 @@ const AddShow = () => {
                     label="Ticket Price"
                     rules={[{ required: true, message: "Ticket price is required!" }]}
                 >
-                    <Input type="number" placeholder="Enter ticket price" />
+                    <Input type="text" placeholder="Enter ticket price"
+                        inputMode="numeric"
+                        pattern="\d*" />
                 </Form.Item>
                 {/* Total Seats  */}
                 <Form.Item
@@ -97,22 +124,28 @@ const AddShow = () => {
                     label="Total Seats"
                     rules={[{ required: true, message: "Total seats are required!" }]}
                 >
-                    <Input type="number" placeholder="Enter total seats" />
+                    <Input type="text" placeholder="Enter total seats"
+                        inputMode="numeric"
+                        pattern="\d*" />
                 </Form.Item>
                 {/* Theatre ID  */}
                 <Form.Item
                     name="theatre"
-                    label="Theatre ID"
+                    label="Theatre"
+                    initialValue="Select a theatre"
                     rules={[{ required: true, message: "Theatre ID is required!" }]}
                 >
-                    <Input type="string" placeholder="Enter theatre ID" />
+                    <Select>
+                    {theatres.map(theatre => (
+                            <Select.Option key={theatre._id} value={theatre._id}>
+                                {theatre.name} : {theatre.address}
+                            </Select.Option>
+                        ))}
+                    </Select>
                 </Form.Item>
 
-                <Button type="primary" htmlType="submit">
+                <Button block type="primary" htmlType="submit" style={{fontWeight: 600}}>
                     Add Show
-                </Button>
-                <Button onClick={() => navigate(-1)} style={{ marginLeft: 10 }}>
-                    Cancel
                 </Button>
             </Form>
         </div>

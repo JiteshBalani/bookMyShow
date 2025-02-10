@@ -48,6 +48,17 @@ const MovieInfo = ({ movieInfoOpen, setMovieInfoOpen, selectedMovie, onMovieUpda
   return (
     <>
       <Modal id={selectedMovie?._id} title={selectedMovie?.title || 'Movie Details'} open={movieInfoOpen} width={800} footer={null} onCancel={handleCancel}>
+      <Flex justify="end" align="center" gap='small'>
+        <Button danger type="primary"
+                style={{ fontSize: "1rem", fontWeight: "600" }}
+                onClick={handleDelete}>
+                Delete this movie
+              </Button>
+        <Button color="blue" variant="outlined" onClick={() => window.open(`/add-show-by-movie/${selectedMovie._id}/${encodeURIComponent(selectedMovie.title)}`, '_blank')}
+                style={{ fontSize: "1rem", fontWeight: "600" }}
+                >Add new show</Button>
+      </Flex>
+        
         <Form
           layout="vertical"
           style={{ width: "100%" }}
@@ -230,13 +241,11 @@ const MovieInfo = ({ movieInfoOpen, setMovieInfoOpen, selectedMovie, onMovieUpda
           </Row>
           <Form.Item>
             <Flex justify="center" align="center" gap='small'>
-              <Button danger type="primary"
-                style={{ fontSize: "1rem", fontWeight: "600" }}
-                onClick={handleDelete}>
-                Delete this movie
-              </Button>
-              <Button color="blue" variant="outlined" onClick={() => navigate(`/add-show-by-movie/${selectedMovie._id}`)}>Add new show</Button>
-              <Button onClick={handleCancel}>
+              
+              <Button
+              block
+               style={{ fontSize: "1rem", fontWeight: "600" }}
+               onClick={handleCancel}>
                 Cancel
               </Button>
               <Button
@@ -245,7 +254,7 @@ const MovieInfo = ({ movieInfoOpen, setMovieInfoOpen, selectedMovie, onMovieUpda
                 htmlType="submit"
                 style={{ fontSize: "1rem", fontWeight: "600" }}
               >
-                Save changes
+                Save all changes
               </Button>
             </Flex>
           </Form.Item>
