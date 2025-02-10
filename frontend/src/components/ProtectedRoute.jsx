@@ -1,20 +1,24 @@
 import { useState, useEffect } from 'react';
 import { replace, useNavigate } from 'react-router-dom';
 import { GetCurrentUser } from '../api/users';
-import { Menu, Layout, message } from 'antd';
+import { Menu, Layout, message, Switch } from 'antd';
 // import { Menu, message, Layout, Header } from 'antd';
 import { Header } from 'antd/es/layout/layout';
 import {
   HomeOutlined,
   LogoutOutlined,
   ProfileOutlined,
-  UserOutlined
+  UserOutlined,
+  SunOutlined,
+  MoonOutlined
 } from '@ant-design/icons';
+import { enable, disable } from 'darkreader';
 
 // eslint-disable-next-line react/prop-types
 const ProtectedRoute = ({children, adminOnly = false}) => {
 
   const [user, setUser] = useState(null);
+  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem("darkMode") === "true");
 
   const navigate = useNavigate();
 
@@ -23,8 +27,35 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
     setUser(null);
     navigate('/login', {replace: true});
   }
+  const toggleDarkMode = (checked) => {
+    if (checked) {
+      enable();
+      localStorage.setItem("darkMode", "true");
+    } else {
+      disable();
+      localStorage.setItem("darkMode", "false");
+    }
+    setIsDarkMode(checked);
+  };
 
   const navItems = [
+    {
+      key: "Dark",
+      label: (
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "0 12px" }}>
+        <SunOutlined style={{ color: isDarkMode ? "gray" : "yellow", fontSize: "18px" }} />
+        <Switch
+          default
+          checked={isDarkMode}
+          onChange={toggleDarkMode} 
+          style={{
+            backgroundColor: isDarkMode ? "#1890ff" : "#ccc", // Blue for dark mode, gray for light mode
+          }}
+        />
+        <MoonOutlined style={{ color: isDarkMode ? "white" : "gray", fontSize: "18px" }} />
+      </div>
+    ),
+    },
     {
       key: "home",
       label: <span onClick={() => navigate('/')}>Home</span>,
@@ -79,6 +110,13 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
       navigate('/login');
     }
   }, [setUser]);
+  useEffect(() => {
+    if (isDarkMode) {
+      enable();
+    } else {
+      disable();
+    }
+  }, [isDarkMode]);
 
   return (
     <>

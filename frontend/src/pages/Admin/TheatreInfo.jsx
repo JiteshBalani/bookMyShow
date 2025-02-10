@@ -1,60 +1,60 @@
-import { Col, Modal, Row, Form, Input, Select, Button, message } from "antd";
+import { Col, Modal, Row, Form, Input, Select, Button, message, Flex } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { updateTheatre, deleteTheatre } from "../../api/theatres";
 
 
-const TheatreInfo = ({theatreInfoOpen, setTheatreInfoOpen, selectedTheatre, onTheatreUpdate}) => {
+const TheatreInfo = ({ theatreInfoOpen, setTheatreInfoOpen, selectedTheatre, onTheatreUpdate }) => {
 
-    const handleOk = () => {
-        setTheatreInfoOpen(false);
-      };
-      const handleCancel = () => {
-        setTheatreInfoOpen(false);
-      };
-    
-      const handleChange = (value) => {
-        console.log(`selected ${value}`);
-    };
+  const handleOk = () => {
+    setTheatreInfoOpen(false);
+  };
+  const handleCancel = () => {
+    setTheatreInfoOpen(false);
+  };
 
-    const handleDelete = () => {
-        Modal.confirm({
-          title: "Are you sure you want to delete this theatre?",
-          content: "This action cannot be undone.",
-          okText: "Yes, Delete",
-          okType: "danger",
-          cancelText: "Cancel",
-          onOk: async () => {
-            const response = await deleteTheatre(selectedTheatre._id);
-            setTheatreInfoOpen(false);
-            message.success("Theatre deleted successfully!");
-            onTheatreUpdate();
-            console.log(response);
-          },
-        });
-      };  
-    
-      const onFinish = async(values) => {
-        console.log(values);
-        const response = await updateTheatre(selectedTheatre._id, values);
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
+
+  const handleDelete = () => {
+    Modal.confirm({
+      title: "Are you sure you want to delete this theatre?",
+      content: "This action cannot be undone.",
+      okText: "Yes, Delete",
+      okType: "danger",
+      cancelText: "Cancel",
+      onOk: async () => {
+        const response = await deleteTheatre(selectedTheatre._id);
         setTheatreInfoOpen(false);
-        message.success('Changes saved successfully!');
+        message.success("Theatre deleted successfully!");
         onTheatreUpdate();
         console.log(response);
-      }
+      },
+    });
+  };
+
+  const onFinish = async (values) => {
+    console.log(values);
+    const response = await updateTheatre(selectedTheatre._id, values);
+    setTheatreInfoOpen(false);
+    message.success('Changes saved successfully!');
+    onTheatreUpdate();
+    console.log(response);
+  }
 
   return (
     <Modal id={selectedTheatre?._id} title={selectedTheatre?.name || 'Theatre Details'} open={theatreInfoOpen} width={800} footer={null} onCancel={handleCancel}>
-        <Form
+      <Form
         layout="vertical"
         style={{ width: "100%" }}
         onFinish={onFinish}
         initialValues={{
-            name: selectedTheatre?.name,
-            address: selectedTheatre?.address,
-            phone: selectedTheatre?.phone,
-            email: selectedTheatre?.email,
-            owner: selectedTheatre?.owner,
-            isActive: selectedTheatre?.isActive.toString()
+          name: selectedTheatre?.name,
+          address: selectedTheatre?.address,
+          phone: selectedTheatre?.phone,
+          email: selectedTheatre?.email,
+          owner: selectedTheatre?.owner,
+          isActive: selectedTheatre?.isActive.toString()
         }}
       >
         <Row
@@ -131,7 +131,7 @@ const TheatreInfo = ({theatreInfoOpen, setTheatreInfoOpen, selectedTheatre, onTh
                     { required: true, message: "Email ID is required!" },
                   ]}
                 >
-                <Input
+                  <Input
                     id="email"
                     type="email"
                     placeholder="Enter the email id"
@@ -185,32 +185,36 @@ const TheatreInfo = ({theatreInfoOpen, setTheatreInfoOpen, selectedTheatre, onTh
                     onChange={handleChange}
                     options={[
                       { value: "true", label: "true" },
-                      { value: "false", label: "false"}
+                      { value: "false", label: "false" }
                     ]}
                   />
                 </Form.Item>
               </Col>
-              
+
             </Row>
           </Col>
         </Row>
         <Form.Item>
-          <Button
-            block
-            type="primary"
-            htmlType="submit"
-            style={{ fontSize: "1rem", fontWeight: "600" }}
-          >
-            Save the changes
-          </Button>
-          <Button className="mt-3" block onClick={handleCancel}>
-            Cancel
-          </Button>
-          <Button danger type="primary" 
-            style={{ fontSize: "1rem", fontWeight: "600" }} 
-            className="mt-3" block onClick={handleDelete}>
-            Delete this theatre
-          </Button>
+          <Flex justify="center" align="center" gap='small'>
+
+            <Button danger type="primary"
+              style={{ fontSize: "1rem", fontWeight: "600" }}
+              block onClick={handleDelete}>
+              Delete this theatre
+            </Button>
+            <Button block onClick={handleCancel}>
+              Cancel
+            </Button>
+
+            <Button
+              block
+              type="primary"
+              htmlType="submit"
+              style={{ fontSize: "1rem", fontWeight: "600" }}
+            >
+              Save the changes
+            </Button>
+          </Flex>
         </Form.Item>
       </Form>
     </Modal>

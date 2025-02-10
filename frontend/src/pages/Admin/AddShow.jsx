@@ -66,7 +66,7 @@ const AddShow = () => {
 
     return (
         <div style={{ maxWidth: 600, margin: "auto", padding: 20 }}>
-            <h2>{decodedMovieName}</h2>
+            <h1 style={{color: "#1677FF"}}>{decodedMovieName}</h1>
             <Form layout="vertical" onFinish={onFinish}>
 
                 {/* Name  */}
