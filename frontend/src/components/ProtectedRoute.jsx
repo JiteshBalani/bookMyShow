@@ -133,7 +133,7 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
           fontFamily: "montserrat"
         }}
       >
-        <h3 className='demo-logo text-white m-0' style={{color: "white", fontSize: "20px", fontWeight: 600}} onClick={() => navigate('/')}>Book My Show</h3>
+        <h3 className='demo-logo text-white m-0' style={{color: "white", fontSize: "20px", fontWeight: 600}} onClick={() => navigate('/')}>TopShow</h3>
         <Menu theme='dark' mode='horizontal' items={navItems} style={{fontSize: "16px"}} selectedKeys={[]}/>
       </Header>
       <div style={{padding: 24, minHeight: 380, background: "#fff"}}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { getMovieById } from '../../api/movies';
-import { Input, message, Spin, Space, Button } from 'antd';
+import { Input, message, Spin, Space, Button, Divider, Col, Row, Tooltip } from 'antd';
 import moment from 'moment';
 import { CalendarOutlined } from "@ant-design/icons";
 import { allTheatresByMovie } from '../../api/shows';
@@ -122,8 +122,50 @@ const SingleMovie = () => {
             <br />
 
             <div className="d-flex flex-column-mob align-items-center mt-3">
-
-              {shows.length > 0 ? (
+            {shows.length > 0 ? (
+          <div className="theatre-wrapper mt-3 pt-3">
+            <h2>Available Showtimes</h2>
+            {shows.map((theatre) => {
+              return (
+                <div key={theatre._id}>
+                  <Row gutter={24} key={theatre._id}>
+                    <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                      <h3>{theatre.name}</h3>
+                      <p>{theatre.address}</p>
+                    </Col>
+                    <Col xs={{ span: 24 }} lg={{ span: 16 }}>
+                      <ul className="show-ul">
+                        {theatre.shows
+                          .sort((a, b) => {
+                            const timeA = moment(a.time, "hh:mm A");
+                            const timeB = moment(b.time, "hh:mm A");
+                            return timeA.diff(timeB);
+                          })
+                          .map((singleShow) => {
+                            const availableSeats = singleShow.totalSeats - singleShow.bookedSeats.length;
+                            
+                            return (
+                              <Tooltip key={singleShow._id} title={`Available seats: ${availableSeats}`} color="#27667B">
+                              <li
+                              onClick={() => navigate(`/book-show/${singleShow._id}/${movie.title}`)}
+                              >
+                              {singleShow.time}
+                              </li>
+                              </Tooltip>
+                            );
+                          })}
+                      </ul>
+                    </Col>
+                  </Row>
+                  <Divider />
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+                <p>No shows available for the selected date.</p>
+              )}
+              {/* {shows.length > 0 ? (
                 <div className="showtimes-section">
                   <h2 style={{fontWeight: 500}}>Available Showtimes</h2>
                   {shows.map((theatre) => (
@@ -158,7 +200,7 @@ const SingleMovie = () => {
                 </div>
               ) : (
                 <p>No shows available for the selected date.</p>
-              )}
+              )} */}
             </div>
 
           </div>

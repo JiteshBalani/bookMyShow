@@ -51,7 +51,7 @@ router.post('/add-show-by-movie/:_id', async(req, res) => {
             message: `Error adding new show! ${error.message}`
         });
     }
-});
+}); 
 
 //list all shows by theatre
 router.get('/all-shows-by-theatre/:_id', async(req, res) => {

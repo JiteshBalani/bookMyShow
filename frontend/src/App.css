@@ -1,3 +1,7 @@
+*{
+  font-family: montserrat;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -150,12 +154,12 @@ hr{
   border: 1px solid #bbb;
   border-radius: 5px;
   cursor: pointer;
-  color: orange;
+  color: rgb(13, 170, 13);
   transition: all 0.1s ease-in;
 }
 .show-ul li:hover{
   color: #fff;
-  background-color: orange;
+  background-color: rgb(13, 170, 13);
   border-color: transparent;
 }
 .movie-title-details *{
