@@ -3,7 +3,9 @@ const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware');
 const Booking = require('../models/bookingModel');
 const Show = require('../models/showModel');
-const stripe = require('stripe')('sk_test_51QrRzlKtEtLLKH9ObM4MeDrnv9TLKystgIdoivCwUGmkgaeEIiC9ziyc2f8okZx2RRlWwApwBgWn0zyhNE0YwxGm00NFjFEFpe');
+require('dotenv').config();
+const stripeKey = process.env.STRIPE-KEY;
+const stripe = require('stripe')(stripeKey);
 
 // Create a booking after the payment
 router.post('/book-show',  async (req, res) => {
@@ -26,6 +28,7 @@ router.post('/book-show',  async (req, res) => {
     }
 });
 
+//make payment
 router.post('/make-payment',  async (req, res) => {
     try{
         const {token, amount} = req.body;
