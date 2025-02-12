@@ -4,7 +4,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const Booking = require('../models/bookingModel');
 const Show = require('../models/showModel');
 require('dotenv').config();
-const stripeKey = process.env.STRIPE-KEY;
+const stripeKey = process.env.STRIPE-SK;
 const stripe = require('stripe')(stripeKey);
 
 // Create a booking after the payment
