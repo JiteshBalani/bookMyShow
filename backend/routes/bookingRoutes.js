@@ -4,7 +4,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const Booking = require('../models/bookingModel');
 const Show = require('../models/showModel');
 require('dotenv').config();
-const stripeKey = process.env.STRIPE-SK;
+const stripeKey = process.env.STRIPE_SK;
 const stripe = require('stripe')(stripeKey);
 
 // Create a booking after the payment
@@ -38,12 +38,13 @@ router.post('/make-payment',  async (req, res) => {
         });
 
         const paymentIntent = await stripe.paymentIntents.create({
-            amount: amount,
-            currency: 'usd',
+            amount: amount * 100, //convert in cents
+            currency: 'inr',
             customer: customer.id,
             payment_method_types: ['card'],
             receipt_email: token.email,
-            description: "Token has been assigned to the movie!"
+            description: "Token has been assigned to the movie!",
+            confirm: true //ensures payment is confirmed
         });
 
         // const charge = await stripe.charges.create({

@@ -147,7 +147,7 @@ const SingleMovie = () => {
                             return (
                               <Tooltip key={singleShow._id} title={`Available seats: ${availableSeats}`} color="#27667B">
                               <li
-                              onClick={() => navigate(`/book-show/${singleShow._id}/${movie.title}`)}
+                              onClick={() => navigate(`/book-show/${singleShow._id}`)}
                               >
                               {singleShow.time}
                               </li>
@@ -165,42 +165,6 @@ const SingleMovie = () => {
         ) : (
                 <p>No shows available for the selected date.</p>
               )}
-              {/* {shows.length > 0 ? (
-                <div className="showtimes-section">
-                  <h2 style={{fontWeight: 500}}>Available Showtimes</h2>
-                  {shows.map((theatre) => (
-                    <div key={theatre._id} className="theatre-card">
-                      <Space size="middle" wrap>
-                        <h4>{theatre.name}:</h4>
-                        <p>{theatre.address}</p>
-                      </Space>
-                      {theatre.shows.length > 0 ? (
-                        <div className="show-details">
-                          <Space size="middle" wrap>
-                            {theatre.shows.map((show) => (
-                              <Button
-                                key={show._id}
-                                onClick={() => navigate(`/book/${show._id}`)}
-                                color="purple" variant="filled"                              >
-                                <Space direction="vertical" size={0} align="center">
-                                  <span>{show.time}</span>
-                                  <span>₹{show.ticketPrice}</span>
-                                </Space>
-                              </Button>
-                            ))}
-                          </Space>
-                          <br/>
-                          <hr/>
-                        </div>
-                      ) : (
-                        <p>No shows available.</p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p>No shows available for the selected date.</p>
-              )} */}
             </div>
 
           </div>

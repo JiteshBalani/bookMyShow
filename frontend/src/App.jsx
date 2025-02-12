@@ -8,6 +8,7 @@ import Register from './pages/Register/Register'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import SingleMovie from './pages/SingleMovie'
 import AddShow from './pages/Admin/AddShow'
+import BookShow from './pages/BookShow/BookShow'
 
 function App() {
   
@@ -40,6 +41,11 @@ function App() {
             <Profile/>
           </ProtectedRoute>
         }/>
+        <Route path="/book-show/:id" element={
+          <ProtectedRoute>
+            <BookShow />
+          </ProtectedRoute>
+          } />
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
       </Routes>
