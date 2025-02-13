@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { replace, useNavigate } from 'react-router-dom';
 import { GetCurrentUser } from '../api/users';
-import { Menu, Layout, message, Switch } from 'antd';
+import { Menu, Layout, message, Switch, Segmented } from 'antd';
 // import { Menu, message, Layout, Header } from 'antd';
 import { Header } from 'antd/es/layout/layout';
 import {
@@ -37,23 +37,39 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
     }
     setIsDarkMode(checked);
   };
+  <Segmented
+    shape="round"
+    options={[
+      {
+        value: 'light',
+        icon: <SunOutlined />,
+      },
+      {
+        value: 'dark',
+        icon: <MoonOutlined />,
+      },
+    ]}
+  />
 
   const navItems = [
     {
       key: "Dark",
       label: (
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", padding: "0 12px" }}>
-        <SunOutlined style={{ color: isDarkMode ? "gray" : "yellow", fontSize: "18px" }} />
-        <Switch
-          default
-          checked={isDarkMode}
-          onChange={toggleDarkMode} 
-          style={{
-            backgroundColor: isDarkMode ? "#1890ff" : "#ccc", // Blue for dark mode, gray for light mode
-          }}
-        />
-        <MoonOutlined style={{ color: isDarkMode ? "white" : "gray", fontSize: "18px" }} />
-      </div>
+        <Segmented
+        options={[
+          {
+            value: "light",
+            icon: <SunOutlined />,
+          },
+          {
+            value: "dark",
+            icon: <MoonOutlined />,
+          },
+        ]}
+        value={isDarkMode ? "dark" : "light"}
+        onChange={(value) => toggleDarkMode(value === "dark")}
+        style={{ backgroundColor: isDarkMode ? "#333" : "#ddd", padding: "5px" }}
+      />
     ),
     },
     {
@@ -69,7 +85,7 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
         {
           key: "profile",
           label: <span onClick={() => 
-          user?.isAdmin ? navigate('/admin') : navigate('/profile')}>Profile</span>,
+          user?.isAdmin ? navigate('/admin') : navigate('/forbidden')}>Profile</span>,
           icon: <ProfileOutlined />
         },
         {
@@ -84,7 +100,7 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
 
   const getValidUser = async() =>{
     try{
-      const response = await GetCurrentUser();
+      const response = await GetCurrentUser(navigate);
       console.log(response);
       if(user !== response.data){
         setUser(response.data);
@@ -93,8 +109,8 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
       // console.log(response.data.name);
 
       if(adminOnly && !response.data.isAdmin){
-        message.error("You are not authorized to access this page");
-        navigate('/');
+        // message.error("You are not authorized to access this page");
+        navigate('/forbidden');
         return;
       }
     } catch(error){

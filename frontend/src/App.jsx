@@ -9,6 +9,9 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import SingleMovie from './pages/SingleMovie'
 import AddShow from './pages/Admin/AddShow'
 import BookShow from './pages/BookShow/BookShow'
+import NotFound from './pages/ErrorPages/NotFound'
+import Forbidden from './pages/ErrorPages/Forbidden'
+import SomethingWentWrong from './pages/ErrorPages/SomethingWentWrong'
 
 function App() {
   
@@ -48,6 +51,11 @@ function App() {
           } />
         <Route path='/login' element={<Login/>}/>
         <Route path='/register' element={<Register/>}/>
+        
+        {/*Error pages*/}
+        <Route path="/forbidden" element={<Forbidden />} />
+        <Route path='/server-error' element={<SomethingWentWrong/>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
     </>

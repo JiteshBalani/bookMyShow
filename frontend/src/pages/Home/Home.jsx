@@ -40,10 +40,10 @@ const Home = () => {
   }
 
   return (
-    <div style={{fontFamily: "montserrat"}}>
+    <div className='inner-container' style={{fontFamily: "montserrat"}}>
       <h1 className='text-center mb-5'>Shows near you</h1>
       <Row
-        className="justify-content-center"
+        className="justify-content-center flex-1"
 
         gutter={{
           xs: 8,
@@ -56,7 +56,7 @@ const Home = () => {
           movies.map((movie) => {
             return(
               <Col
-                className="gutter-row mb-5"
+                className="gutter-row mb-5 mx-auto"
                 key={movie._id}
                 span={{
                   xs: 24,
