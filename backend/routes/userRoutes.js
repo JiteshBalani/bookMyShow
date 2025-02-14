@@ -24,7 +24,7 @@ router.post('/register', async(req, res) => {
         const newUser = await User(req.body);
         await newUser.save();
 
-        const token = jwt.sign({userId: newUser._id}, "BMS-login", {expiresIn: "1d"})
+        const token = jwt.sign({userId: newUser._id}, process.env.SECRET_KEY, {expiresIn: "1d"})
 
         res.send({
             success: true,
