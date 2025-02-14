@@ -2,28 +2,28 @@ import { Col, Modal, Row, Form, Input, Select, Button, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { addMovie } from "../../api/movies";
 
-const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
+const MovieForm = ({ modalOpen, setModalOpen, onMovieUpdate }) => {
 
-    const handleCancel = () => {
-        setModalOpen(false);
-    };
+  const handleCancel = () => {
+    setModalOpen(false);
+  };
 
-    const handleChange = (value) => {
-        console.log(`selected ${value}`);
-    };
+  const handleChange = (value) => {
+    console.log(`selected ${value}`);
+  };
 
-    const onFinish = async(values) => {
-        console.log(values);
-        const response = await addMovie(values);
-        onMovieUpdate();
-        setModalOpen(false);
-        message.success('New movie added!');
-        console.log(response);
-    };
+  const onFinish = async (values) => {
+    console.log(values);
+    const response = await addMovie(values);
+    onMovieUpdate();
+    setModalOpen(false);
+    message.success('New movie added!');
+    console.log(response);
+  };
 
   return (
     <Modal open={modalOpen} width={800} footer={null} onCancel={handleCancel}>
-        <Form
+      <Form
         layout="vertical"
         style={{ width: "100%" }}
         onFinish={onFinish}
@@ -190,6 +190,21 @@ const MovieForm = ({modalOpen, setModalOpen, onMovieUpdate}) => {
                     id="poster"
                     type="text"
                     placeholder="Enter the poster URL"
+                  ></Input>
+                </Form.Item>
+              </Col>
+              <Col span={24}>
+                <Form.Item
+                  label="Banner Poster"
+                  htmlFor="bannerPoster"
+                  name="bannerPoster"
+                  className="d-block"
+                  rules={[{ required: true, message: "Banner Poster is required!" }]}
+                >
+                  <Input
+                    id="bannerPoster"
+                    rows="4"
+                    placeholder="Paste the URL for banner poster."
                   ></Input>
                 </Form.Item>
               </Col>

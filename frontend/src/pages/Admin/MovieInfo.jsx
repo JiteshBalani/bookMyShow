@@ -48,17 +48,17 @@ const MovieInfo = ({ movieInfoOpen, setMovieInfoOpen, selectedMovie, onMovieUpda
   return (
     <>
       <Modal id={selectedMovie?._id} title={selectedMovie?.title || 'Movie Details'} open={movieInfoOpen} width={800} footer={null} onCancel={handleCancel}>
-      <Flex justify="end" align="center" gap='small'>
-        <Button danger type="primary"
-                style={{ fontSize: "1rem", fontWeight: "600" }}
-                onClick={handleDelete}>
-                Delete this movie
-              </Button>
-        <Button color="blue" variant="outlined" onClick={() => window.open(`/add-show-by-movie/${selectedMovie._id}/${encodeURIComponent(selectedMovie.title)}`, '_blank')}
-                style={{ fontSize: "1rem", fontWeight: "600" }}
-                >Add new show</Button>
-      </Flex>
-        
+        <Flex justify="end" align="center" gap='small'>
+          <Button danger type="primary"
+            style={{ fontSize: "1rem", fontWeight: "600" }}
+            onClick={handleDelete}>
+            Delete this movie
+          </Button>
+          <Button color="blue" variant="outlined" onClick={() => window.open(`/add-show-by-movie/${selectedMovie._id}/${encodeURIComponent(selectedMovie.title)}`, '_blank')}
+            style={{ fontSize: "1rem", fontWeight: "600" }}
+          >Add new show</Button>
+        </Flex>
+
         <Form
           layout="vertical"
           style={{ width: "100%" }}
@@ -236,16 +236,31 @@ const MovieInfo = ({ movieInfoOpen, setMovieInfoOpen, selectedMovie, onMovieUpda
                     ></Input>
                   </Form.Item>
                 </Col>
+                <Col span={24}>
+                  <Form.Item
+                    label="Banner Poster"
+                    htmlFor="bannerPoster"
+                    name="bannerPoster"
+                    className="d-block"
+                    rules={[{ required: true, message: "Banner Poster is required!" }]}
+                  >
+                    <Input
+                      id="bannerPoster"
+                      rows="4"
+                      placeholder="Paste the URL for banner poster."
+                    ></Input>
+                  </Form.Item>
+                </Col>
               </Row>
             </Col>
           </Row>
           <Form.Item>
             <Flex justify="center" align="center" gap='small'>
-              
+
               <Button
-              block
-               style={{ fontSize: "1rem", fontWeight: "600" }}
-               onClick={handleCancel}>
+                block
+                style={{ fontSize: "1rem", fontWeight: "600" }}
+                onClick={handleCancel}>
                 Cancel
               </Button>
               <Button

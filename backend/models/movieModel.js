@@ -29,6 +29,10 @@ const movieSchema = new mongoose.Schema({
         type: String,
         required: true 
     },
+    bannerPoster: {
+        type: String,
+        required: true
+    }
 });
 
 const Movies = mongoose.model('movies', movieSchema);

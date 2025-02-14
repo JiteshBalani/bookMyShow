@@ -12,6 +12,7 @@ import BookShow from './pages/BookShow/BookShow'
 import NotFound from './pages/ErrorPages/NotFound'
 import Forbidden from './pages/ErrorPages/Forbidden'
 import SomethingWentWrong from './pages/ErrorPages/SomethingWentWrong'
+import AuthError from './pages/ErrorPages/AuthError'
 
 function App() {
   
@@ -53,6 +54,7 @@ function App() {
         <Route path='/register' element={<Register/>}/>
         
         {/*Error pages*/}
+        <Route path='/authentication-error' element={<AuthError/>} />
         <Route path="/forbidden" element={<Forbidden />} />
         <Route path='/server-error' element={<SomethingWentWrong/>} />
         <Route path="*" element={<NotFound />} />
