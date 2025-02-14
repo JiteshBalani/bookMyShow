@@ -120,6 +120,7 @@ router.get('/get-all-theatres-for-movie/:movie', async(req, res) => {
     }
 });
 
+//get show by id
 router.post('/get-show-by-id',  async (req, res) => {
     try{
         const show = await Show.findById(req.body.showId).populate('movie').populate('theatre');

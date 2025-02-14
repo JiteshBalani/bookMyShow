@@ -8,9 +8,12 @@ const stripeKey = process.env.STRIPE_SK;
 const stripe = require('stripe')(stripeKey);
 
 // Create a booking after the payment
-router.post('/book-show',  async (req, res) => {
+router.post('/book-show', authMiddleware, async (req, res) => {
     try{
-        const newBooking = new Booking(req.body);
+        const newBooking = new Booking({
+            ...req.body,
+            user: req.body.userId
+        });
         await newBooking.save();
         const show = await Show.findById(req.body.show).populate("movie");
         const updatedBookedSeats = [...show.bookedSeats, ...req.body.seats];
