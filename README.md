@@ -46,7 +46,6 @@ Apart from the core technologies, the following libraries are used:
 #### Clone the repository
 ```sh
 git clone https://github.com/JiteshBalani/bookMyShow.git
-cd movie-ticket-booking
 ```
 #### Install dependencies
 ##### Backend Setup
