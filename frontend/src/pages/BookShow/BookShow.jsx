@@ -176,7 +176,7 @@
                     <h3>
                       <span>Date & Time: </span>
                       {moment(show.date).format("MMM Do YYYY")} at{" "}
-                      {moment(show.time, "HH:mm").format("hh:mm A")}
+                      {show.time}
                     </h3>
                     <h3>
                       <span>Ticket Price:</span> Rs. {show.ticketPrice}/-

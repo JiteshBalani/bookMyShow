@@ -31,7 +31,15 @@ const Profile = () => {
     <div style={{minHeight: '100vh'}}>
       <h1>Bookings </h1>
       {bookings && <Row gutter={24}>
-        {bookings.map(booking => {
+        {bookings.sort((a, b) => {
+    const dateDiff = new Date(b.show.date) - new Date(a.show.date); // Compare dates (latest first)
+    
+    if (dateDiff !== 0) return dateDiff; // If dates are different, sort by date
+
+    // If dates are the same, sort by time (latest first)
+    return moment(b.show.time, "hh:mm A").diff(moment(a.show.time, "hh:mm A"));
+  })
+        .map(booking => {
           return <Col key={booking._id} xs={{ span: 24 }} lg={{ span: 12 }}>
             <Card className="mb-3">
               <div className="d-flex flex-column-mob">
@@ -42,7 +50,7 @@ const Profile = () => {
                     <hr/>
                     <Flex gap='small' vertical><p>Theatre: <b>{booking.show.theatre.name}</b></p>
                       <p>Seat(s) no.: <b>{booking.seats.join(", ")}</b></p>
-                      <p>Date & Time: <b>{moment(booking.show.date).format("MMM Do YYYY")},  {moment(booking.show.time, "HH:mm").format("hh:mm A")}</b>  </p>
+                      <p>Date & Time: <b>{moment(booking.show.date).format("MMM Do YYYY")},  {booking.show.time}</b>  </p>
                       <p>Amount: <b>₹ {booking.show.bookedSeats.length * booking.show.ticketPrice}/- </b></p>
                       <p>Booking ID: <b>{booking.transactionId} </b></p>
                     </Flex>
