@@ -92,7 +92,8 @@ const AddShow = () => {
                     label="Show Date"
                     rules={[{ required: true, message: "Show date is required!" }]}
                 >
-                    <DatePicker type="string" style={{ width: "100%" }} />
+                    <DatePicker type="string" style={{ width: "100%" }}
+                    disabledDate={(current) => current && current < dayjs().startOf("day")} />
                 </Form.Item>
                 {/* Time  */}
                 <Form.Item
