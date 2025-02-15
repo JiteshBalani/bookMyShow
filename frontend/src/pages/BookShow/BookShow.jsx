@@ -11,7 +11,7 @@
     const [selectedSeats, setSelectedSeats] = useState([]);
     const params = useParams();
     const navigate = useNavigate();
-    const stripePubKey = import.meta.env.VITE_STRIPE_PK;
+    const stripePubKey = "pk_test_51QrRzlKtEtLLKH9OAKMUitZI4Y3L7jzL5T8LVpQ8KmCNnhNM6vB46IXiGMsOkJYjZyWY7MgAeITzpRMAon4ggOAB00vd4fHedn";
 
     const getData = async () => {
       try {

@@ -74,31 +74,31 @@ const SingleMovie = () => {
         <div className="d-flex single-movie-div">
           <div className="flex-Shrink-0 me-3 single-movie-img">
             <img src={movie.bannerPoster} width={1000} alt="Movie Poster"
-            style={{height: "600px"}} />
+              style={{ height: "600px" }} />
           </div>
           <div className="w-100">
             <h1 className="mt-0">{movie.title}</h1>
-            
+
             <Space direction='horizontal' size="middle" align='center'>
-            <p className="movie-data">
-              Release Date:{" "}
-              <span>{moment(movie.date).format("MMM DD YYYY")}</span>
-            </p>
-            <p className="movie-data">
-              Language: <span>{movie.language}</span>
-            </p>
-            <p className="movie-data">
-              Genre: <span>{movie.genre}</span>
-            </p>
-            
-            <p className="movie-data">
-              Duration: <span>{movie.duration} Minutes</span>
-            </p>
-            
-            
+              <p className="movie-data">
+                Release Date:{" "}
+                <span>{moment(movie.date).format("MMM DD YYYY")}</span>
+              </p>
+              <p className="movie-data">
+                Language: <span>{movie.language}</span>
+              </p>
+              <p className="movie-data">
+                Genre: <span>{movie.genre}</span>
+              </p>
+
+              <p className="movie-data">
+                Duration: <span>{movie.duration} Minutes</span>
+              </p>
+
+
             </Space>
             <hr />
-            <h2 style={{fontWeight: 500}}>About this movie</h2>
+            <h2 style={{ fontWeight: 500 }}>About this movie</h2>
             <p className="movie-data">
               <span>{movie.description}</span>
             </p>
@@ -107,63 +107,75 @@ const SingleMovie = () => {
 
 
             <div className="d-flex flex-column-mob align-items-center mt-3">
-            <Space direction="horizontal" size={0} align="center">
-              <label className="me-3 flex-shrink-0" style={{ fontSize: "16px" }}>Choose the date:</label>
-              <Input
-                onChange={handleDate}
-                type="date"
-                min={moment().format("YYYY-MM-DD")}
-                className="max-width-300 mt-8px-mob"
-                value={date}
-                placeholder="default size"
-                prefix={<CalendarOutlined />}
-              />
+              <Space direction="horizontal" size={0} align="center">
+                <label className="me-3 flex-shrink-0" style={{ fontSize: "16px" }}>Choose the date:</label>
+                <Input
+                  onChange={handleDate}
+                  type="date"
+                  min={moment().format("YYYY-MM-DD")}
+                  className="max-width-300 mt-8px-mob"
+                  value={date}
+                  placeholder="default size"
+                  prefix={<CalendarOutlined />}
+                />
               </Space>
             </div>
             <br />
 
             <div className="d-flex flex-column-mob align-items-center mt-3">
-            {shows.length > 0 ? (
-          <div className="theatre-wrapper mt-3 pt-3">
-            <h2>Available Showtimes</h2>
-            {shows.map((theatre) => {
-              return (
-                <div key={theatre._id}>
-                  <Row gutter={24} key={theatre._id}>
-                    <Col xs={{ span: 24 }} lg={{ span: 8 }}>
-                      <h3>{theatre.name}</h3>
-                      <p>{theatre.address}</p>
-                    </Col>
-                    <Col xs={{ span: 24 }} lg={{ span: 16 }}>
-                      <ul className="show-ul">
-                        {theatre.shows
-                          .sort((a, b) => {
-                            const timeA = moment(a.time, "hh:mm A");
-                            const timeB = moment(b.time, "hh:mm A");
-                            return timeA.diff(timeB);
-                          })
-                          .map((singleShow) => {
-                            const availableSeats = singleShow.totalSeats - singleShow.bookedSeats.length;
-                            
-                            return (
-                              <Tooltip key={singleShow._id} title={`Available seats: ${availableSeats}`} color="#27667B">
-                              <li
-                              onClick={() => navigate(`/book-show/${singleShow._id}`)}
-                              >
-                              {singleShow.time}
-                              </li>
-                              </Tooltip>
-                            );
-                          })}
-                      </ul>
-                    </Col>
-                  </Row>
-                  <Divider />
+              {shows.length > 0 ? (
+                <div className="theatre-wrapper mt-3 pt-3">
+                  <h2>Available Showtimes</h2>
+                  {shows.map((theatre) => {
+                    return (
+                      <div key={theatre._id}>
+                        <Row gutter={24} key={theatre._id}>
+                          <Col xs={{ span: 24 }} lg={{ span: 8 }}>
+                            <h3>{theatre.name}</h3>
+                            <p>{theatre.address}</p>
+                          </Col>
+                          <Col xs={{ span: 24 }} lg={{ span: 16 }}>
+                            <ul className="show-ul">
+                              {theatre.shows
+                                .sort((a, b) => {
+                                  const timeA = moment(a.time, "hh:mm A");
+                                  const timeB = moment(b.time, "hh:mm A");
+                                  return timeA.diff(timeB);
+                                })
+                                .map((singleShow) => {
+                                  const showTime = moment(singleShow.time, "hh:mm A");
+                                  const cutoffTime = showTime.subtract(15, "minutes");
+                                  const isBookingClosed = moment().isAfter(cutoffTime);
+
+                                  const availableSeats = singleShow.totalSeats - singleShow.bookedSeats.length;
+                                  const tooltipMessage = isBookingClosed
+                                    ? "Bookings closed for this show. Select the next available show."
+                                    : `Available seats: ${availableSeats}`;
+
+                                  return (
+                                    <Tooltip key={singleShow._id} title={tooltipMessage} color={isBookingClosed ? "red" : "#27667B"}>
+                                      <li
+                                        style={{
+                                          // pointerEvents: isBookingClosed ? "none" : "auto",
+                                          color: isBookingClosed ? "gray" : "inherit",
+                                          cursor: isBookingClosed ? "not-allowed" : "pointer"
+                                        }}
+                                        onClick={!isBookingClosed ? () => navigate(`/book-show/${singleShow._id}`) : null}
+                                      >
+                                        {singleShow.time}
+                                      </li>
+                                    </Tooltip>
+                                  );
+                                })}
+                            </ul>
+                          </Col>
+                        </Row>
+                        <Divider />
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
-        ) : (
+              ) : (
                 <p>No shows available for the selected date.</p>
               )}
             </div>
