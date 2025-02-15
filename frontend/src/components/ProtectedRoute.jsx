@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { replace, useNavigate } from 'react-router-dom';
 import { GetCurrentUser } from '../api/users';
-import { Menu, Layout, message, Switch, Segmented } from 'antd';
+import { Menu, Layout, message, Switch, Segmented, Flex } from 'antd';
 // import { Menu, message, Layout, Header } from 'antd';
-import { Header } from 'antd/es/layout/layout';
+import { Footer, Header } from 'antd/es/layout/layout';
+import Logo from '../../public/Logo.png'
 import {
   HomeOutlined,
   LogoutOutlined,
@@ -148,13 +149,19 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
           alignItems: "center",
           fontFamily: "montserrat"
         }}
-      >
-        <h3 className='demo-logo text-white m-0' style={{color: "white", fontSize: "20px", fontWeight: 600}} onClick={() => navigate('/')}>TopShow</h3>
+      ><img src={Logo} width="40px"></img>
+        <h3 className='demo-logo text-white m-0' style={{color: "white", fontSize: "20px", fontWeight: 600, marginLeft: '5px'}} onClick={() => navigate('/')}> TopShow</h3>
         <Menu theme='dark' mode='horizontal' items={navItems} style={{fontSize: "16px"}} selectedKeys={[]}/>
       </Header>
       <div style={{padding: 24, minHeight: 380, background: "#fff"}}>
         {children}
       </div>
+      <Footer style={{ textAlign: 'center', backgroundColor:'#001529', color:'white' }}>
+      <Flex justify='center' align='center' gap='middle'>
+      <img src={Logo} width="40px"></img>
+        <h3>TopShow ©{new Date().getFullYear()} Created by <span className='cursor-pointer' onClick={() => window.open('https://github.com/JiteshBalani', '_blank')}>Jitesh Balani</span></h3>
+        </Flex>
+      </Footer>
     </Layout>
     </>
   )

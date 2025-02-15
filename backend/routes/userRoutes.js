@@ -77,6 +77,49 @@ router.post('/login', async(req, res) => {
     };
 });
 
+router.post('/reset-password', async(req, res) => {
+    try {
+        // Assuming req.body contains email and new password
+        const { email, newPassword } = req.body;
+        
+        const user = await User.findOne({ email });
+        if(!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User does not exist"
+            });
+        }
+
+        // Basic password validation
+        if (!newPassword || newPassword.length < 8) {
+            return res.status(400).json({
+                success: false,
+                message: "Password must be at least 8 characters long"
+            });
+        }
+
+        // Hash the new password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        // Update user's password
+        user.password = hashedPassword;
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            message: "Password updated successfully"
+        });
+
+    } catch (error) {
+        console.error('Reset password error:', error);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+});
+
 router.get('/get-current-user',  authMiddleware, async (req, res) => {
     // inform the server if the token is valid or not and who the user is
     const user = await User.findById(req.body.userId).select("-password");

@@ -13,6 +13,7 @@ import NotFound from './pages/ErrorPages/NotFound'
 import Forbidden from './pages/ErrorPages/Forbidden'
 import SomethingWentWrong from './pages/ErrorPages/SomethingWentWrong'
 import AuthError from './pages/ErrorPages/AuthError'
+import ForgotPassword from './pages/Login/ForgotPassword'
 
 function App() {
   
@@ -51,6 +52,7 @@ function App() {
           </ProtectedRoute>
           } />
         <Route path='/login' element={<Login/>}/>
+        <Route path='/forgot-password' element={<ForgotPassword/>} />
         <Route path='/register' element={<Register/>}/>
         
         {/*Error pages*/}

@@ -1,7 +1,8 @@
   import { useEffect } from 'react';
-  import { Button, Form, Input, message } from 'antd';
+  import { Button, Flex, Form, Input, message } from 'antd';
   import { LoginUser } from '../../api/users';
   import { useNavigate } from 'react-router-dom';
+  import Logo from '../../../public/Logo.png'
   
   const Login = () => {
     const navigate = useNavigate();
@@ -32,7 +33,10 @@
       <header className="App-header">
         <main className="main-area mw-500 text-center px-3">
           <section className="left-section">
-            <h1> Login to BookMyShow </h1>
+          <Flex vertical justify='center' align='center' gap='small'>
+      <img src={Logo} width="60px"></img>
+        <h1>Login to TopShow</h1>
+        </Flex>
           </section>
           <section className="right-section">
             <Form
@@ -64,6 +68,8 @@
                   placeholder="Enter your Password"
                 ></Input>
               </Form.Item>
+                <span className='d-block' onClick={() => navigate('/forgot-password')} 
+                style={{marginTop:'-25px', marginBottom:'25px', textAlign:'left', color:'blue', fontStyle:'italic', fontWeight: 500, cursor:'pointer'}}>Forgot password?</span>
               <Form.Item className="d-block">
                 <Button
                   type="primary"
@@ -74,6 +80,9 @@
                   Login
                 </Button>
               </Form.Item>
+              <span onClick={() => navigate('/register')}
+                style={{fontWeight: 600, cursor: 'pointer'}}
+              >New to TopShow? Click here to register.</span>
             </Form>
           </section>
         </main>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Button, Form, Input, message } from 'antd'
+import { Button, Flex, Form, Input, message } from 'antd'
 import { RegisterUser } from '../../api/users'
+import Logo from '../../../public/Logo.png'
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -43,9 +44,10 @@ const Register = () => {
     <header className="App-header">
    <main className="main-area mw-500 text-center px-3">
      <section className="left-section">
-       <h1>
-         Register to BookMyShow
-       </h1>
+     <Flex vertical justify='center' align='center' gap='small'>
+      <img src={Logo} width="60px"></img>
+        <h1>Register to TopShow</h1>
+        </Flex>
      </section>
      <section className="right-section">
        <Form
@@ -102,6 +104,9 @@ const Register = () => {
              Register
            </Button>
          </Form.Item>
+         <span onClick={() => navigate('/login')}
+                style={{fontWeight: 600, cursor: 'pointer'}}
+              >Already a TopShow user? Click here to login.</span>
        </Form>
      </section>
    </main>
