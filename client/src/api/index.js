@@ -1,11 +1,12 @@
 import axios from 'axios'
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const axiosInstance = axios.create({
     headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
     },
-    baseURL: 'http://localhost:3000/',
+    baseURL: API_BASE_URL,
     withCredentials: true
     // timeout: 1000,
   });
