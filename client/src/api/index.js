@@ -6,7 +6,7 @@ export const axiosInstance = axios.create({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('token')}`
     },
-    baseURL: API_BASE_URL,
+    baseURL: 'http://localhost:5173',
     withCredentials: true
     // timeout: 1000,
   });
