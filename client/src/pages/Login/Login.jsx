@@ -62,11 +62,11 @@
                 className="d-block"
                 rules={[{ required: true, message: "Password is required" }]}
               >
-                <Input
+                <Input.Password
                   id="password"
                   type="password"
                   placeholder="Enter your Password"
-                ></Input>
+                ></Input.Password>
               </Form.Item>
                 <span className='d-block' onClick={() => navigate('/forgot-password')} 
                 style={{marginTop:'-25px', marginBottom:'25px', textAlign:'left', color:'blue', fontStyle:'italic', fontWeight: 500, cursor:'pointer'}}>Forgot password?</span>

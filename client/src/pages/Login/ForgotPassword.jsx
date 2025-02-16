@@ -31,7 +31,7 @@ const ForgotPassword = () => {
           <Input type="email" placeholder="Enter your email" />
         </Form.Item>
         <Form.Item name="newPassword" label="New password" rules={[{ required: true, message: "Please enter your new password" }]}>
-          <Input type="password" placeholder="Enter your new password" />
+          <Input.Password type="password" placeholder="Enter your new password" />
         </Form.Item>
         <Button type="primary" htmlType="submit" block>
           Submit
