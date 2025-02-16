@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button, Flex, Form, Input, message } from 'antd'
 import { RegisterUser } from '../../api/users'
-import Logo from '../../../public/Logo.png'
+import Logo from '../../assets/Logo.png'
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {

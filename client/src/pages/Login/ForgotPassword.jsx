@@ -1,7 +1,7 @@
 import { Button, Flex, Form, Input, message } from 'antd';
 import { ResetPasswordRequest } from '../../api/users'; // API call
 import { useNavigate } from 'react-router-dom';
-import Logo from '../../../public/Logo.png'
+import Logo from '../../assets/Logo.png'
 
 const ForgotPassword = () => {
   const navigate = useNavigate();

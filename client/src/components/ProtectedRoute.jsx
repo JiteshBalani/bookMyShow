@@ -4,7 +4,7 @@ import { GetCurrentUser } from '../api/users';
 import { Menu, Layout, message, Segmented, Flex } from 'antd';
 // import { Menu, message, Layout, Header } from 'antd';
 import { Footer, Header } from 'antd/es/layout/layout';
-import Logo from '../../public/Logo.png'
+import Logo from '../../src/assets/Logo.png'
 import {
   HomeOutlined,
   LogoutOutlined,
@@ -159,7 +159,7 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
       <Footer style={{ textAlign: 'center', backgroundColor:'#001529', color:'white' }}>
       <Flex justify='center' align='center' gap='middle'>
       <img src={Logo} width="40px"></img>
-        <h3>TopShow ©{new Date().getFullYear()} Created by <span color='blue' className='cursor-pointer' 
+        <h3>TopShow ©{new Date().getFullYear()} Created by <span style={{color:'blue'}} className='cursor-pointer' 
         onClick={() => window.open('https://github.com/JiteshBalani', '_blank')}>Jitesh Balani</span></h3>
         </Flex>
       </Footer>

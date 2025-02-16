@@ -2,7 +2,7 @@
   import { Button, Flex, Form, Input, message } from 'antd';
   import { LoginUser } from '../../api/users';
   import { useNavigate } from 'react-router-dom';
-  import Logo from '../../../public/Logo.png'
+  import Logo from '../../assets/Logo.png'
   
   const Login = () => {
     const navigate = useNavigate();
