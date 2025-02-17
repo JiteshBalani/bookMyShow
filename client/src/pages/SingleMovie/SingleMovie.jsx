@@ -143,8 +143,8 @@ const SingleMovie = () => {
                                   return timeA.diff(timeB);
                                 })
                                 .map((singleShow) => {
-                                  const showTime = moment(singleShow.time, "hh:mm A");
-                                  const cutoffTime = showTime.subtract(15, "minutes");
+                                  const showDateTime = moment(`${date} ${singleShow.time}`, "YYYY-MM-DD hh:mm A");
+                                  const cutoffTime = showDateTime.subtract(15, "minutes");
                                   const isBookingClosed = moment().isAfter(cutoffTime);
 
                                   const availableSeats = singleShow.totalSeats - singleShow.bookedSeats.length;
