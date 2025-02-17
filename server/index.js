@@ -24,7 +24,7 @@ let frontendURL = process.env.FRONTEND_URL
 console.log(frontendURL);
 
 app.use(cors({
-    origin: frontendURL, 
+    origin: process.env.FRONTEND_URL, 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true // If you're using cookies/sessions
