@@ -48,11 +48,11 @@ mongoose.connect(dbURL).then( () => {
     }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, ()=>{
     try{
-        console.log('Server is running on ', PORT);
+        console.log('Server is running on', PORT);
     } catch(err) {
         console.log(err);
     }
