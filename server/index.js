@@ -1,3 +1,8 @@
+if (process.env.NODE_ENV === 'development') {
+    require('dotenv').config({ path: '.env.development' });
+} else {
+    require('dotenv').config({ path: '.env.production' });
+}
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -6,12 +11,15 @@ const movieRoutes = require('./routes/movieRoutes');
 const theatreRoutes = require('./routes/theatreRoutes');
 const showRoutes = require('./routes/showRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
-require('dotenv').config();
+// require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+
+let frontendURL = process.env.FRONTEND_URL
+console.log(frontendURL);
 app.use(cors({
-    origin: 'https://topshow.vercel.app', 
+    origin: frontendURL, 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true // If you're using cookies/sessions

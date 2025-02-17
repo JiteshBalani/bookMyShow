@@ -1,6 +1,8 @@
 import axios from 'axios'
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
+// console.log(`Current backend url: ${API_BASE_URL}`)
+
 export const axiosInstance = axios.create({
     headers: {
         'Content-Type': 'application/json',
