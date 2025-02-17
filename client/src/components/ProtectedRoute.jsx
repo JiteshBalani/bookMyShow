@@ -86,7 +86,7 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
         {
           key: "profile",
           label: <span onClick={() => 
-          user?.isAdmin ? navigate('/admin') : navigate('/forbidden')}>Profile</span>,
+          user?.isAdmin ? navigate('/admin') : navigate('/profile')}>Profile</span>,
           icon: <ProfileOutlined />
         },
         {
