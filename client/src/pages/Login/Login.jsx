@@ -12,7 +12,6 @@
         if(response.status) {
           localStorage.setItem('token', response.token);
           navigate('/', {replace: true});
-          console.log(response);
           message.success("You are logged in.");
         } else{
           console.log(response.message);
