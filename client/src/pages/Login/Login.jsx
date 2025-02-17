@@ -9,7 +9,7 @@
     const onFinish = async(values) => {
       try{
         const response = await LoginUser(values);
-        if(response.status) {
+        if(response.success) {
           localStorage.setItem('token', response.token);
           navigate('/', {replace: true});
           message.success("You are logged in.");
