@@ -1,29 +1,37 @@
-if (process.env.NODE_ENV === 'development') {
-    require('dotenv').config({ path: '.env.development' });
-} else {
-    require('dotenv').config({ path: '.env.production' });
-}
+const dotenv = require('dotenv');
+
+// Default to production unless a specific flag is provided
+const envFile = process.argv.includes('--dev') ? '.env.development' : '.env.production';
+dotenv.config({ path: envFile });
+
+// console.log(`Loaded environment file: ${envFile}`);
+// console.log('FRONTEND_URL:', process.env.FRONTEND_URL);
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+
 const userRoutes = require('./routes/userRoutes');
 const movieRoutes = require('./routes/movieRoutes');
 const theatreRoutes = require('./routes/theatreRoutes');
 const showRoutes = require('./routes/showRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
-// require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 
 let frontendURL = process.env.FRONTEND_URL
 console.log(frontendURL);
+
 app.use(cors({
     origin: frontendURL, 
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true // If you're using cookies/sessions
 }));
+
+app.options('*', cors());
+
 app.use('/api/users', userRoutes);
 app.use('/api/movies', movieRoutes);
 app.use('/api/theatres', theatreRoutes);
@@ -40,9 +48,11 @@ mongoose.connect(dbURL).then( () => {
     }
 });
 
-app.listen(3000, ()=>{
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, ()=>{
     try{
-        console.log('Server is connected.');
+        console.log('Server is running on ', PORT);
     } catch(err) {
         console.log(err);
     }
