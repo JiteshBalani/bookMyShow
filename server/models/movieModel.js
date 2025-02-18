@@ -32,6 +32,10 @@ const movieSchema = new mongoose.Schema({
     bannerPoster: {
         type: String,
         required: true
+    },
+    weekendOnly: {
+        type: Boolean,
+        required: false
     }
 });
 
