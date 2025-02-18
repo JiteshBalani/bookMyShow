@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { message, Row, Col, Input } from 'antd';
+import { message, Row, Col, Input, Badge } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { getAllMovies } from "../../api/movies";
 import { Spin } from 'antd';
@@ -66,6 +66,11 @@ const Home = () => {
                 }}
               >
                 <div className="text-center">
+                <Badge.Ribbon 
+                    text="Weekend Classic" 
+                    color="blue" 
+                    style={{ display: movie.weekendOnly ? "block" : "none" }}
+                  >
                   <img
                     className="cursor-pointer"
                     src={movie?.poster}
@@ -80,8 +85,9 @@ const Home = () => {
                       );
                     }}
                   />
+                  </Badge.Ribbon>
                   <h3
-                    className="cursor-pointer" style={{fontWeight: 700, fontSize: "16px"}}
+                    className="cursor-pointer" style={{fontWeight: 700, fontSize: "16px", width:'200px'}}
                   >
                     {movie?.title}
                   </h3>

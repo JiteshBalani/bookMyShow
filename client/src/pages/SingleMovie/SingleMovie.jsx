@@ -157,7 +157,7 @@ const SingleMovie = () => {
                                       <li
                                         style={{
                                           // pointerEvents: isBookingClosed ? "none" : "auto",
-                                          color: isBookingClosed ? "gray" : "inherit",
+                                          color: isBookingClosed ? "gray" : "green",
                                           cursor: isBookingClosed ? "not-allowed" : "pointer"
                                         }}
                                         onClick={!isBookingClosed ? () => navigate(`/book-show/${singleShow._id}`) : null}

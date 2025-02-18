@@ -70,7 +70,8 @@ const MovieInfo = ({ movieInfoOpen, setMovieInfoOpen, selectedMovie, onMovieUpda
             language: selectedMovie?.language,
             releaseDate: selectedMovie?.releaseDate,
             genre: selectedMovie?.genre,
-            poster: selectedMovie?.poster
+            poster: selectedMovie?.poster,
+            bannerPoster: selectedMovie?.bannerPoster
           }}
         >
           <Row
@@ -236,7 +237,7 @@ const MovieInfo = ({ movieInfoOpen, setMovieInfoOpen, selectedMovie, onMovieUpda
                     ></Input>
                   </Form.Item>
                 </Col>
-                <Col span={24}>
+                <Col span={16}>
                   <Form.Item
                     label="Banner Poster"
                     htmlFor="bannerPoster"
@@ -251,6 +252,27 @@ const MovieInfo = ({ movieInfoOpen, setMovieInfoOpen, selectedMovie, onMovieUpda
                     ></Input>
                   </Form.Item>
                 </Col>
+                <Col span={8}>
+                  <Form.Item
+                    label="Weekend Only"
+                    htmlFor="weekendOnly"
+                    name="weekendOnly"
+                    className="d-block"
+                    initialValue={false}
+                    rules={[
+                      { required: false },
+                    ]}
+                  >
+                    <Select
+                      style={{ width: "100%" }}
+                      onChange={handleChange}
+                      options={[
+                        { value: false, label: "false" },
+                        { value: true, label: "true" }
+                      ]}
+                    />
+                  </Form.Item>
+                  </Col>
               </Row>
             </Col>
           </Row>

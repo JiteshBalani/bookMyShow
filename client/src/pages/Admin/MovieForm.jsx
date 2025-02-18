@@ -193,7 +193,7 @@ const MovieForm = ({ modalOpen, setModalOpen, onMovieUpdate }) => {
                   ></Input>
                 </Form.Item>
               </Col>
-              <Col span={24}>
+              <Col span={16}>
                 <Form.Item
                   label="Banner Poster"
                   htmlFor="bannerPoster"
@@ -208,6 +208,27 @@ const MovieForm = ({ modalOpen, setModalOpen, onMovieUpdate }) => {
                   ></Input>
                 </Form.Item>
               </Col>
+              <Col span={8}>
+                  <Form.Item
+                    label="Weekend Only"
+                    htmlFor="weekendOnly"
+                    name="weekendOnly"
+                    className="d-block"
+                    initialValue={false}
+                    rules={[
+                      { required: false },
+                    ]}
+                  >
+                    <Select
+                      style={{ width: "100%" }}
+                      onChange={handleChange}
+                      options={[
+                        { value: false, label: "false" },
+                        { value: true, label: "true" }
+                      ]}
+                    />
+                  </Form.Item>
+                  </Col>
             </Row>
           </Col>
         </Row>
