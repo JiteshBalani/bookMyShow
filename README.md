@@ -69,6 +69,18 @@ JWT_SECRET=your_secret_key
 STRIPE_SECRET_KEY=your_stripe_secret_key
 ```
 
+Create a `.env.development` file in the root directory of server and configure the following:
+```.env.development
+FRONTEND_URL=http://localhost:5173
+PORT=3000
+```
+
+Create a `.env.production` file in the root directory of server and configure the following:
+```.env.production
+FRONTEND_URL=https://your-production-frontend-url
+PORT=3000
+```
+
 ## Usage
 1. Register or log in to your account.
 2. Browse available movies and select a showtime.
