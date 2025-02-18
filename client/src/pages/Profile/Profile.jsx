@@ -43,7 +43,7 @@ const Profile = () => {
           return <Col key={booking._id} xs={{ span: 24 }} lg={{ span: 12 }}>
             <Card className="mb-3">
               <div className="d-flex flex-column-mob">
-                <Flex gap='small'>
+                <Flex gap='small' className="flex-column-mob" align="center">
 
                   <div className="show-details flex-1" style={{ padding: "10px" }}>
                     <h2 className="mt-0 mb-0">{booking.show.movie.title}</h2>
@@ -52,7 +52,7 @@ const Profile = () => {
                       <p>Seat(s) no.: <b>{booking.seats.join(", ")}</b></p>
                       <p>Date & Time: <b>{moment(booking.show.date).format("MMM Do YYYY")},  {booking.show.time}</b>  </p>
                       <p>Amount: <b>₹ {booking.show.bookedSeats.length * booking.show.ticketPrice}/- </b></p>
-                      <p>Booking ID: <b>{booking.transactionId} </b></p>
+                      <p style={{overflow:'hidden'}}>Booking ID: <b>{booking.transactionId} </b></p>
                     </Flex>
 
                   </div>
