@@ -15,7 +15,7 @@
       try{
         dispatch(setLoading(true));
         const response = await LoginUser(values);
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 200));
         if(response.status) {
           localStorage.setItem('token', response.token);
           navigate('/', {replace: true});
