@@ -5,17 +5,24 @@
   import moment from "moment";
   import { bookShow, makePayment } from "../../api/bookings";
   import StripeCheckout from 'react-stripe-checkout';
+  import { useDispatch } from "react-redux";
+  import { setLoading } from "../../app/loaderSlice";
+  import Loader from "../../components/Loader";
 
   const BookShow = () => {
     const [show, setShow] = useState();
     const [selectedSeats, setSelectedSeats] = useState([]);
     const params = useParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const stripePubKey = "pk_test_51QrRzlKtEtLLKH9OAKMUitZI4Y3L7jzL5T8LVpQ8KmCNnhNM6vB46IXiGMsOkJYjZyWY7MgAeITzpRMAon4ggOAB00vd4fHedn";
 
     const getData = async () => {
       try {
+        dispatch(setLoading(true));
         const response = await getShowById({ showId: params.id });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
         if (response.success) {
           setShow(response.data);
           // message.success(response.message);
@@ -25,6 +32,8 @@
         }
       } catch (err) {
         message.error(err.message);
+      } finally {
+        dispatch(setLoading(false));
       }
     };
 
@@ -35,6 +44,7 @@
     
       return (
         <div className="d-flex flex-column align-items-center">
+        <Loader/>
           <div className="w-100 max-width-600 mx-auto mb-25px">
             <p className="text-center mb-10px">
               Screen this side, you will be watching in this direction

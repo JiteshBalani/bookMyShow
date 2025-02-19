@@ -5,22 +5,27 @@ import { Input, message, Spin, Space, Button, Divider, Col, Row, Tooltip } from 
 import moment from 'moment';
 import { CalendarOutlined } from "@ant-design/icons";
 import { allTheatresByMovie } from '../../api/shows';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../app/loaderSlice';
+import Loader from '../../components/Loader';
 
 const SingleMovie = () => {
 
   const [movie, setMovie] = useState([]);
-  const [loadingInfo, setLoadingInfo] = useState(false);
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
   const [theatresInfo, setTheatresInfo] = useState(false);
   const [shows, setShows] = useState([]);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const params = useParams();
 
   const getMovieData = async () => {
     try {
-      setLoadingInfo(true);
+      dispatch(setLoading(true));
       const response = await getMovieById(params.id);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       if (response.success) {
         setMovie(response.data);
         console.log(response.data);
@@ -30,7 +35,7 @@ const SingleMovie = () => {
     } catch (error) {
       message.error(error.message);
     } finally {
-      setLoadingInfo(false);
+      dispatch(setLoading(false));
     }
   };
 
@@ -67,9 +72,9 @@ const SingleMovie = () => {
     getShows();
   }, [date]);
 
-  if (loadingInfo === true) { <Spin /> }
   return (
     <div className='inner-container' style={{ fontFamily: "montserrat" }}>
+    <Loader/>
       {movie && (
         <div className="d-flex single-movie-div">
           <div className="flex-Shrink-0 me-3 single-movie-img">

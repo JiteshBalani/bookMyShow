@@ -3,10 +3,14 @@ import { Button, Flex, Form, Input, message } from 'antd'
 import { RegisterUser } from '../../api/users'
 import Logo from '../../assets/Logo.png'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../app/loaderSlice';
+import Loader from '../../components/Loader';
 
 const Register = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [loadings, setLoadings] = useState([]);
 
@@ -27,7 +31,9 @@ const Register = () => {
 
   const onFinish = async(values) => {
     try{
+      dispatch(setLoading(true));
       const response = await RegisterUser(values);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       localStorage.setItem('token', response.token);
       console.log(response);
       
@@ -38,10 +44,13 @@ const Register = () => {
     } catch(error) {
       message.error(error.response?.data?.message || 'Registration Failed!');
       console.error('Registration Error', error);
-    }  
+    }  finally {
+      setLoading(false);
+    }
   }
   return (
     <header className="App-header">
+    <Loader/>
    <main className="main-area mw-500 text-center px-3">
      <section className="left-section">
      <Flex vertical justify='center' align='center' gap='small'>

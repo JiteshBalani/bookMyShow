@@ -3,13 +3,20 @@ import { useEffect, useState } from "react";
 import { getAllBookings } from "../../api/bookings";
 import moment from 'moment';
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../app/loaderSlice";
+import Loader from "../../components/Loader";
 
 const Profile = () => {
   const [bookings, setBookings] = useState([]);
+  const dispatch = useDispatch();
 
   const getData = async () => {
     try {
+      dispatch(setLoading(true));
       const response = await getAllBookings();
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       if (response.success) {
         setBookings(response.data);
         console.log(response.data);
@@ -19,6 +26,8 @@ const Profile = () => {
 
     } catch (err) {
       message.error(err.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   }
 
@@ -29,6 +38,7 @@ const Profile = () => {
 
   return (
     <div style={{minHeight: '100vh'}}>
+    <Loader/>
       <h1>Bookings </h1>
       {bookings && <Row gutter={24}>
         {bookings.sort((a, b) => {

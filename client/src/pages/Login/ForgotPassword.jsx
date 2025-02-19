@@ -2,13 +2,20 @@ import { Button, Flex, Form, Input, message } from 'antd';
 import { ResetPasswordRequest } from '../../api/users'; // API call
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/Logo.png'
+import { setLoading } from '../../app/loaderSlice';
+import { useDispatch } from 'react-redux';
+import Loader from '../../components/Loader';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onFinish = async (values) => {
     try {
+      dispatch(setLoading(true));
       const response = await ResetPasswordRequest(values);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       if (response.success) {
         message.success("Password changed successfully! Redirecting to login.");
         setTimeout(() => navigate('/login'), 2000);
@@ -17,11 +24,14 @@ const ForgotPassword = () => {
       }
     } catch (error) {
       message.error(error.message);
+    } finally{
+      dispatch(setLoading(false));
     }
   };
 
   return (
     <div style={{ maxWidth: 600, margin: "auto", padding: 20 }}>
+    <Loader/>
       <Flex vertical justify='center' align='center' gap='small'>
       <img src={Logo} width="60px"></img>
         <h2>Reset password</h2>

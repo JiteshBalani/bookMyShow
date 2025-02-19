@@ -1,20 +1,25 @@
 import {useState, useEffect} from 'react';
-import { message, Row, Col, Input, Badge } from 'antd';
+import { message, Row, Col, Input, Badge, Flex, Alert } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { getAllMovies } from "../../api/movies";
 import { Spin } from 'antd';
 import moment from "moment";
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../app/loaderSlice';
+import Loader from '../../components/Loader';
 
 const Home = () => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [movies, setMovies] = useState([]);
-  const [loadState, setLoadState] = useState(false);
 
   const getData = async () => {
-    setLoadState(true);
+    dispatch(setLoading(true));
     try {
       const response = await getAllMovies();
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       if(response.success) {
         setMovies(response.data);
       } else {
@@ -26,7 +31,7 @@ const Home = () => {
       message.error(error.message);
 
     } finally {
-      setLoadState(false);
+      dispatch(setLoading(false));
     }
 
   }
@@ -35,13 +40,11 @@ const Home = () => {
     getData();
   }, []);
   
-  if(loadState) {
-    <div><Spin/></div>
-  }
-
+  
   return (
-    <div className='inner-container' style={{fontFamily: "montserrat"}}>
-      <h1 className='text-center mb-5'>Shows near you</h1>
+    <div className='inner-container' style={{fontFamily: "montserrat", height:'100%'}}>
+    <Loader/>
+            <h1 className='text-center mb-5'>Shows near you</h1>
       <Row
         className="justify-content-center flex-1"
 

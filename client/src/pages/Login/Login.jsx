@@ -3,12 +3,19 @@
   import { LoginUser } from '../../api/users';
   import { useNavigate } from 'react-router-dom';
   import Logo from '../../assets/Logo.png'
+  import { useDispatch } from 'react-redux';
+  import { setLoading } from '../../app/loaderSlice';
+  import Loader from '../../components/Loader';
   
   const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const onFinish = async(values) => {
       try{
+        dispatch(setLoading(true));
         const response = await LoginUser(values);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         if(response.status) {
           localStorage.setItem('token', response.token);
           navigate('/', {replace: true});
@@ -19,6 +26,8 @@
         }
       } catch(error) {
         console.log(error);
+      } finally {
+        dispatch(setLoading(false));
       }
     }
     useEffect(() => {
@@ -28,7 +37,8 @@
     }, []);
     
     return (
-      
+      <>
+      <Loader/>
       <header className="App-header">
         <main className="main-area mw-500 text-center px-3">
           <section className="left-section">
@@ -86,6 +96,7 @@
           </section>
         </main>
       </header>
+      </>
     )
   }
   
