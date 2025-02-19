@@ -137,7 +137,7 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
 
   return (
     <>
-    <Layout>
+    <Layout style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header
         className='d-flex justify-content-between cursor-pointer'
         style={{
@@ -153,13 +153,13 @@ const ProtectedRoute = ({children, adminOnly = false}) => {
         <h3 className='demo-logo text-white m-0' style={{color: "white", fontSize: "20px", fontWeight: 600, marginLeft: '5px'}} onClick={() => navigate('/')}> TopShow</h3>
         <Menu theme='dark' mode='horizontal' items={navItems} style={{fontSize: "16px"}} selectedKeys={[]}/>
       </Header>
-      <div style={{padding: 24, minHeight: 380, background: "#fff"}}>
+      <div style={{padding: 24, flex: '1 0 auto', background: "#fff"}}>
         {children}
       </div>
       <Footer style={{ textAlign: 'center', backgroundColor:'#001529', color:'white' }}>
       <Flex justify='center' align='center' gap='middle'>
       <img src={Logo} width="40px"></img>
-        <h3>TopShow ©{new Date().getFullYear()} Created by <span style={{color:'#084FB3'}} className='cursor-pointer' 
+        <h3>TopShow ©{new Date().getFullYear()} Created by <span style={{color:'#8AB9F9'}} className='cursor-pointer' 
         onClick={() => window.open('https://github.com/JiteshBalani', '_blank')}>Jitesh Balani</span></h3>
         </Flex>
       </Footer>
