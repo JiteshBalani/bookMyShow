@@ -72,9 +72,10 @@ const Home = () => {
                 <Badge.Ribbon 
                     text="Weekend Classic" 
                     color="blue" 
-                    style={{ display: movie.weekendOnly ? "block" : "none" }}
+                    style={{ display: movie.weekendOnly ? "block" : "none", padding: '5px', fontWeight: 600 }}
                   >
                   <img
+                    loading='lazy'
                     className="cursor-pointer"
                     src={movie?.poster}
                     alt={movie?.title}
