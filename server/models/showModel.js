@@ -7,7 +7,8 @@ const showSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        required: true
+        required: true,
+        expires: 0 
     },
     time: {
         type: String,
