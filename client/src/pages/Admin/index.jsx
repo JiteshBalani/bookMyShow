@@ -14,11 +14,11 @@ const Admin = () => {
             label: <span style={{ fontSize: "18px" }}>Theatres</span>,
             children: <div><TheatreList/></div>
         },
-        {
-            key: '3',
-            label: <span style={{ fontSize: "18px" }}>Shows</span>,
-            children: <div>Shows</div>
-        }
+        // {
+        //     key: '3',
+        //     label: <span style={{ fontSize: "18px" }}>Shows</span>,
+        //     children: <div>Shows</div>
+        // }
         
     ]
   return (
