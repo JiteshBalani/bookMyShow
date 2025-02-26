@@ -126,7 +126,7 @@ const SingleMovie = () => {
               </Space>
             </div>
             <div className='mt-3'>
-                {movie.weekendOnly ? <span style={{fontWeight: 600, fontSize: '15px', color: 'green'}}>NOTE: ONLY AVAILABLE ON FRIDAY / SATURDAY / SUNDAY</span> : ""}
+                {movie.weekendOnly ? <span style={{fontWeight: 600, fontSize: '15px', color: 'green'}}>NOTE: SHOWS FOR THIS MOVIE ARE AVAILABLE ONLY ON FRIDAY / SATURDAY / SUNDAY</span> : ""}
             </div>
             <br />
 
