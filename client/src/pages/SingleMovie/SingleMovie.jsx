@@ -125,6 +125,9 @@ const SingleMovie = () => {
                 />
               </Space>
             </div>
+            <div className='mt-3'>
+                {movie.weekendOnly ? <span style={{fontWeight: 600, fontSize: '15px', color: 'green'}}>NOTE: ONLY AVAILABLE ON FRIDAY / SATURDAY / SUNDAY</span> : ""}
+            </div>
             <br />
 
             <div className="d-flex flex-column-mob align-items-center mt-3">
