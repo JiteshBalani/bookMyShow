@@ -8,7 +8,7 @@ const showSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: true,
-        expires: 0 
+        expires: 2 
     },
     time: {
         type: String,
